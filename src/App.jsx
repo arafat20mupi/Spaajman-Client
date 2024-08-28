@@ -1,7 +1,22 @@
-export default function App() {
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Navbar from './Components/Navbar';
+import Register from './Components/Register';
+import Login from './Components/Login';
+import Footer from './Components/Footer';
+
+const App = () => {
   return (
-    <h1 className="text-3xl font-bold underline">
- Hi Iam belal 
-    </h1>
-  )
-}
+    <Router>
+      <Navbar />
+      <Routes>
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+       
+      </Routes>
+      <Footer/>
+    </Router>
+  );
+};
+
+export default App;
