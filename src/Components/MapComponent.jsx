@@ -13,18 +13,26 @@ const MapComponent = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchedShops = fetchShops().map((shop, index) => ({
-      ...shop,
-      position: [
-        23.8103 + ((index * 0.01) % 0.05),
-        90.4125 + ((index * 0.01) % 0.05),
-      ],
-    }));
-    setShops(fetchedShops);
-    setFilteredShops(fetchedShops);
+    // Fetching shops data and setting positions with unique offsets
+    const fetchShopData = async () => {
+      try {
+        const fetchedShops = fetchShops().map((shop, index) => ({
+          ...shop,
+          position: [
+            23.8103 + ((index * 0.01) % 0.05),
+            90.4125 + ((index * 0.01) % 0.05),
+          ],
+        }));
+        setShops(fetchedShops);
+        setFilteredShops(fetchedShops);
+      } catch (error) {
+        console.error('Error fetching shops:', error);
+      }
+    };
+
+    fetchShopData();
   }, []);
 
- 
   useEffect(() => {
     setFilteredShops(
       shops.filter((shop) =>
@@ -47,7 +55,8 @@ const MapComponent = () => {
   return (
     <div className="relative h-screen pt-16">
       <div className="flex flex-col md:flex-row p-4 h-full">
-        <div className="flex flex-col w-full md:w-1/3 p-4 bg-white shadow-md rounded-md mb-4 md:mb-0 md:mr-4 z-10">
+        {/* Sidebar with search and list of shops */}
+        <div className="flex flex-col w-full md:w-1/3 p-4 bg-white shadow-md rounded-md mb-4 md:mb-0 md:mr-4 z-10 overflow-hidden">
           <div className="flex items-center mb-4">
             <input
               type="text"
@@ -59,7 +68,7 @@ const MapComponent = () => {
             <FaSearch className="ml-2 text-gray-500" />
           </div>
 
-          
+          {/* Displaying filtered shops */}
           <div className="grid grid-cols-1 gap-4 overflow-y-auto max-h-96">
             {filteredShops.map((shop) => (
               <div key={shop.id} className="p-4 bg-gray-100 rounded shadow">
@@ -76,11 +85,12 @@ const MapComponent = () => {
           </div>
         </div>
 
-        <div className="flex-1 h-96 md:h-auto">
+        {/* Map Display */}
+        <div className="flex-1 h-96 md:h-auto relative">
           <MapContainer
             center={[23.8103, 90.4125]}
             zoom={12}
-            style={{ height: '100%', width: '100%' }}
+            style={{ height: '100%', width: '100%', zIndex: 0 }}
           >
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -111,7 +121,8 @@ const MapComponent = () => {
           </MapContainer>
         </div>
       </div>
- 
+
+      {/* Selected Shop Details */}
       {selectedShop && (
         <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-white shadow-lg p-4 rounded-md z-20 w-80">
           <h2 className="text-lg font-semibold">{selectedShop.name}</h2>
