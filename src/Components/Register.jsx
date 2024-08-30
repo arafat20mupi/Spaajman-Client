@@ -1,17 +1,19 @@
 
 
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import gradienBg from "../assets/g.jpeg"
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../Provider/AuthProvider';
+import toast from 'react-hot-toast';
 
 
 
 const Register = () => {
-
+  const {  createUser } = useContext(AuthContext)
   const [labelText, setLabelText] = useState('Full Name *');
   const [placeholderText, setPlaceholderText] = useState('First & Last Name *');
-
+  const navigate = useNavigate();
   const handleSelectChange = (event) => {
     const selectedValue = event.target.value;
     if (selectedValue === 'shop') {
@@ -29,10 +31,27 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
-    // Handle form submission
+  const onSubmit = async (data) => {
+    const { email, password } = data;
+    try {
+      const userCredential = await createUser(email, password);
+      const user = userCredential.user;
+
+     
+
+      // You can handle additional registration data like `registerAs` and `terms` here
+      // e.g., send to a backend or store in a database
+
+      console.log('User created:', user);
+      toast.success('User created successfully');
+      navigate('/');
+      // Optionally, redirect the user or show further instructions
+    } catch (error) {
+      console.error("Error creating user:", error);
+      toast.error("Error creating user: " + error.message);
+    }
   };
+
 
   return (
     <>
@@ -200,7 +219,7 @@ const Register = () => {
                         return value === password || 'Passwords do not match';
                       },
                     })}
-                    
+
                   />
                   {errors.confirmPassword && (
                     <p className="text-red-600">

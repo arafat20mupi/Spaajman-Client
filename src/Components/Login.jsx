@@ -1,31 +1,32 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import gradienBg from "../assets/g.jpeg";
-import { useState } from 'react';
-
+import toast from "react-hot-toast"
+import { useContext } from "react";
+import { AuthContext } from "../Provider/AuthProvider";
 const Login = () => {
+  const {signIn} = useContext(AuthContext)
+  const navigate = useNavigate();
   const { register,
-     handleSubmit,
-      formState: { errors }
-     } = useForm();
+    handleSubmit,
+    formState: { errors }
+  } = useForm();
 
 
-  const [labelText, setLabelText] = useState('Full Name *');
-  const [placeholderText, setPlaceholderText] = useState('First & Last Name *');
-
-  const handleSelectChange = (event) => {
-    const selectedValue = event.target.value;
-    if (selectedValue === 'shop') {
-      setPlaceholderText('Shops First & Last Name');
-      setLabelText('Shop Name *');
-    } else {
-      setLabelText('Full Name *');
-      setPlaceholderText('First & Last Name *');
-    }
-  };
-
+ 
   const onSubmit = (data) => {
-    console.log(data);
+    const email = data.email;
+    const password = data.password;
+    
+    signIn(email, password)
+      .then(() => {
+        toast.success('Login Successful');
+        navigate('/');
+      })
+      .catch(err => {
+        console.log(err);
+        toast.error(err.message);
+      });
   };
 
   return (
@@ -63,20 +64,6 @@ const Login = () => {
         <div className="w-full md:w-1/2 p-8">
           <div className="p-4 py-16 flex flex-col justify-center bg-[#F1F5F9] h-full">
             <form className="md:max-w-lg mx-auto" onSubmit={handleSubmit(onSubmit)}>
-              <label className="block mb-4">
-                <p className="mb-2 text-gray-900 font-semibold leading-normal">
-                  Login as
-                </p>
-                <select
-                  className="px-4 py-3.5 w-full text-gray-400 font-medium placeholder-gray-400 bg-white outline-none border border-gray-300 rounded-lg focus:ring focus:ring-indigo-300"
-                  id="signUpInput1-1"
-                  placeholder="First & last name"
-                  onChange={handleSelectChange}
-                >
-                  <option value="user">User</option>
-                  <option value="shop">Shop</option>
-                </select>
-              </label>
 
               <label className="block mb-4">
                 <p className="mb-2 text-gray-900 font-semibold leading-normal">
