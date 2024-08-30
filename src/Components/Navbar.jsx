@@ -1,6 +1,6 @@
  
 import React, { useState } from 'react';
-import { FaHome, FaSuitcase } from 'react-icons/fa';
+import { FaBlogger, FaHome, FaSuitcase } from 'react-icons/fa';
 import { IoMdAdd } from 'react-icons/io';
 import { Link } from 'react-router-dom';
 
@@ -53,9 +53,14 @@ const Navbar = () => {
           </li></Link>
           {/* <Link to= '/services/:shopId'>
                 <li className="flex items-center text-gray-800 font-medium hover:text-indigo-600 cursor-pointer transition duration-300">
-            <FaSuitcase className="mr-2" />
-            Services
+            <FaBlogger className="mr-2" />
+        Blogs
           </li></Link> */}
+          <Link to= '/blog'>
+                <li className="flex items-center text-gray-800 font-medium hover:text-indigo-600 cursor-pointer transition duration-300">
+            <FaBlogger className="mr-2" />
+        Blogs
+          </li></Link>
     
         </ul>
 
