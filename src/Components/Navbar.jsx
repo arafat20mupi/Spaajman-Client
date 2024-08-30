@@ -1,16 +1,27 @@
+<<<<<<< HEAD
  
 import React, { useState } from 'react';
 import { FaBlogger, FaHome, FaSuitcase } from 'react-icons/fa';
+=======
+
+import React, { useContext, useState } from 'react';
+import { FaHome, FaSuitcase } from 'react-icons/fa';
+>>>>>>> 91f3cfe25b6ef5f5a7e10eb22bc7642da0442501
 import { IoMdAdd } from 'react-icons/io';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../Provider/AuthProvider';
+import toast from 'react-hot-toast';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  const { user,logOut } = useContext(AuthContext)
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-
+ const handleLogOut = () => {
+        logOut();
+        toast.success('Successfully logout!')
+    }
   return (
     <nav className="p-4 bg-white shadow-md flex justify-between items-center fixed top-0 left-0 w-full z-50">
       <div className="text-2xl font-bold text-indigo-700">
@@ -41,27 +52,30 @@ const Navbar = () => {
       </div>
 
       <div
-        className={`${
-          isMenuOpen ? 'translate-x-0' : 'translate-x-full'
-        } md:translate-x-0 fixed top-16 right-0 w-4/5 bg-white md:static md:flex md:items-center md:w-auto transition-transform duration-300 ease-in-out`}
+        className={`${isMenuOpen ? 'translate-x-0' : 'translate-x-full'
+          } md:translate-x-0 fixed top-16 right-0 w-4/5 bg-white md:static md:flex md:items-center md:w-auto transition-transform duration-300 ease-in-out`}
       >
         <ul className="flex flex-col md:flex-row items-center gap-6 md:gap-8 mr-6 p-4 md:p-0 lg:mr-10">
           <Link to="/" >
-          <li className="flex items-center text-gray-800 font-medium hover:text-indigo-600 cursor-pointer transition duration-300">
-            <FaHome className="mr-2" />
-            Home
-          </li></Link>
+            <li className="flex items-center text-gray-800 font-medium hover:text-indigo-600 cursor-pointer transition duration-300">
+              <FaHome className="mr-2" />
+              Home
+            </li></Link>
           {/* <Link to= '/services/:shopId'>
                 <li className="flex items-center text-gray-800 font-medium hover:text-indigo-600 cursor-pointer transition duration-300">
             <FaBlogger className="mr-2" />
         Blogs
           </li></Link> */}
+<<<<<<< HEAD
           <Link to= '/blog'>
                 <li className="flex items-center text-gray-800 font-medium hover:text-indigo-600 cursor-pointer transition duration-300">
             <FaBlogger className="mr-2" />
         Blogs
           </li></Link>
     
+=======
+
+>>>>>>> 91f3cfe25b6ef5f5a7e10eb22bc7642da0442501
         </ul>
 
         <div className="flex flex-col md:flex-row gap-4 items-center p-4 md:p-0">
@@ -69,12 +83,18 @@ const Navbar = () => {
             <FaSuitcase className="mr-2" />
             Find a Job
           </button>
-          <Link to="/register">
-            <button className="border-2 border-indigo-600 text-indigo-600 px-5 py-2 rounded-lg shadow-lg hover:bg-indigo-50 transition duration-300 flex items-center justify-center w-full md:w-auto text-center">
-              <IoMdAdd className="mr-2" />
-              Create an Account
-            </button>
-          </Link>
+          {
+            user ? <button onClick={handleLogOut} className="border-2 border-indigo-600 text-indigo-600 px-5 py-2 rounded-lg shadow-lg hover:bg-indigo-50 transition duration-300 flex items-center justify-center w-full md:w-auto text-center">
+              LogOut
+            </button> : <Link to="/register">
+              <button className="border-2 border-indigo-600 text-indigo-600 px-5 py-2 rounded-lg shadow-lg hover:bg-indigo-50 transition duration-300 flex items-center justify-center w-full md:w-auto text-center">
+                <IoMdAdd className="mr-2" />
+                Create an Shop
+              </button>
+            </Link>
+          }
+
+
         </div>
       </div>
     </nav>
