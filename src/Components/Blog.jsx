@@ -161,7 +161,7 @@ setSalon(filterBySearch)
   
           <Link
             to={`/blog/${salon.id}`}
-            className="mt-3 text-blue-500 hover:underline block"
+            className="mt-3 text-blue-500  hover:underline block"
           >
             View More
           </Link>

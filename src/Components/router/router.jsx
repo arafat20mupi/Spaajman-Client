@@ -10,6 +10,9 @@ import Login from "../Login"
 import Blog from '../Blog';
 import BlogDetails from '../BlogDetails';
 import UserProfile from '../JopPOst';
+import JobList from '../JobList';
+import JobDetails from '../JobDetails';
+import JobApplicationForm from '../JobApplicationForm';
 export const router = createBrowserRouter([
   {
     path: '/',
@@ -42,6 +45,20 @@ export const router = createBrowserRouter([
       {
         path:"/post-job",
         element:  <UserProfile/>
+      }
+      ,
+      {
+        path:"/job-search",
+        element:  <JobList/>
+      },
+      {
+        path:"/job/:id/details",
+        element:<JobDetails/>
+      }
+      ,
+      {
+        path:"/job/:id/apply",
+        element: <JobApplicationForm/>
       }
     ],
   },

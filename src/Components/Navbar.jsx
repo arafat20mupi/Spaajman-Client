@@ -82,10 +82,12 @@ const Navbar = () => {
         </ul>
 
         <div className="flex flex-col md:flex-row gap-4 items-center p-4 md:p-0">
+          <Link to="/job-search">
           <button className="bg-indigo-600 text-white px-5 py-2 rounded-lg shadow-lg hover:bg-indigo-700 transition duration-300 flex items-center justify-center w-full md:w-auto text-center">
             <FaSuitcase className="mr-2" />
             Find a Job
-          </button>
+          </button></Link>
+    
           <Link to="/post-job">
           <button className="bg-indigo-600 text-white px-5 py-2 rounded-lg shadow-lg hover:bg-indigo-700 transition duration-300 flex items-center justify-center w-full md:w-auto text-center">
            
