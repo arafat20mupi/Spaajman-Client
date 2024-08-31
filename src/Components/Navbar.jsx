@@ -1,12 +1,12 @@
-<<<<<<< HEAD
+ 
  
 import React, { useState } from 'react';
-import { FaBlogger, FaHome, FaSuitcase } from 'react-icons/fa';
-=======
 
-import React, { useContext, useState } from 'react';
-import { FaHome, FaSuitcase } from 'react-icons/fa';
->>>>>>> 91f3cfe25b6ef5f5a7e10eb22bc7642da0442501
+ 
+
+import { useContext,  } from 'react';
+import { FaHome, FaSuitcase ,FaBlogger} from 'react-icons/fa';
+ 
 import { IoMdAdd } from 'react-icons/io';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../Provider/AuthProvider';
@@ -66,16 +66,13 @@ const Navbar = () => {
             <FaBlogger className="mr-2" />
         Blogs
           </li></Link> */}
-<<<<<<< HEAD
+ 
           <Link to= '/blog'>
                 <li className="flex items-center text-gray-800 font-medium hover:text-indigo-600 cursor-pointer transition duration-300">
             <FaBlogger className="mr-2" />
         Blogs
           </li></Link>
-    
-=======
-
->>>>>>> 91f3cfe25b6ef5f5a7e10eb22bc7642da0442501
+ 
         </ul>
 
         <div className="flex flex-col md:flex-row gap-4 items-center p-4 md:p-0">
