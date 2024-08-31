@@ -1,18 +1,5 @@
- 
- 
-import React, { useState } from 'react';
-
-<<<<<<< HEAD
- 
-
-import { useContext,  } from 'react';
+ import React, { useState ,useContext } from 'react';
 import { FaHome, FaSuitcase ,FaBlogger} from 'react-icons/fa';
- 
-=======
-import  { useContext, useState } from 'react';
-import { FaHome, FaSuitcase } from 'react-icons/fa';
->>>>>>> 91f3cfe25b6ef5f5a7e10eb22bc7642da0442501
->>>>>>> 8fd03e9414d031dc61c395274daa561d688ca300
 import { IoMdAdd } from 'react-icons/io';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../Provider/AuthProvider';
