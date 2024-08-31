@@ -9,6 +9,7 @@ import ServicesPage from "../ServicesPage"
 import Login from "../Login"
 import Blog from '../Blog';
 import BlogDetails from '../BlogDetails';
+import UserProfile from '../JopPOst';
 export const router = createBrowserRouter([
   {
     path: '/',
@@ -37,6 +38,10 @@ export const router = createBrowserRouter([
       {
         path:"/blog/:id",
         element:  <BlogDetails/>
+      },
+      {
+        path:"/post-job",
+        element:  <UserProfile/>
       }
     ],
   },

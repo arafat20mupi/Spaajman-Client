@@ -2,17 +2,17 @@
  
 import React, { useState } from 'react';
 
-<<<<<<< HEAD
+ 
  
 
-import { useContext,  } from 'react';
+ 
 import { FaHome, FaSuitcase ,FaBlogger} from 'react-icons/fa';
  
-=======
-import  { useContext, useState } from 'react';
-import { FaHome, FaSuitcase } from 'react-icons/fa';
->>>>>>> 91f3cfe25b6ef5f5a7e10eb22bc7642da0442501
->>>>>>> 8fd03e9414d031dc61c395274daa561d688ca300
+// =======
+import  { useContext } from 'react';
+ 
+// >>>>>>> 91f3cfe25b6ef5f5a7e10eb22bc7642da0442501
+// >>>>>>> 8fd03e9414d031dc61c395274daa561d688ca300
 import { IoMdAdd } from 'react-icons/io';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../Provider/AuthProvider';
@@ -86,6 +86,12 @@ const Navbar = () => {
             <FaSuitcase className="mr-2" />
             Find a Job
           </button>
+          <Link to="/post-job">
+          <button className="bg-indigo-600 text-white px-5 py-2 rounded-lg shadow-lg hover:bg-indigo-700 transition duration-300 flex items-center justify-center w-full md:w-auto text-center">
+           
+           Post Job
+          </button></Link>
+       
           {
             user ? <button onClick={handleLogOut} className="border-2 border-indigo-600 text-indigo-600 px-5 py-2 rounded-lg shadow-lg hover:bg-indigo-50 transition duration-300 flex items-center justify-center w-full md:w-auto text-center">
               LogOut
