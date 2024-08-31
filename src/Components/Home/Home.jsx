@@ -1,8 +1,8 @@
- 
+
 import MapComponent from "../MapComponent"
 const Home = () => {
   return (
-<MapComponent/>
+    <MapComponent />
   )
 }
 

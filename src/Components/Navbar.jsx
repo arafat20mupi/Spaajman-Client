@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { FaBlogger, FaHome, FaSuitcase } from 'react-icons/fa';
 =======
 
-import React, { useContext, useState } from 'react';
+import  { useContext, useState } from 'react';
 import { FaHome, FaSuitcase } from 'react-icons/fa';
 >>>>>>> 91f3cfe25b6ef5f5a7e10eb22bc7642da0442501
 import { IoMdAdd } from 'react-icons/io';
