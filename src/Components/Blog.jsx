@@ -54,7 +54,7 @@ const Blog = () => {
         </button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-5">
         {filteredBlogs.map((salonBlog) => (
           <div key={salonBlog._id} className="flex flex-col items-center border rounded-lg shadow-lg p-4 transition-transform duration-300 transform hover:scale-105">
             <img
