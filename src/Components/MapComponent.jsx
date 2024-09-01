@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { FaDirections } from 'react-icons/fa';
 import { fetchShops } from '../Data/FetchData';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const MapComponent = () => {
   const [search, setSearch] = useState('');
@@ -17,7 +17,7 @@ const MapComponent = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:5000/shop');
+        const response = await fetch('https://server-coral-alpha-78.vercel.app/shop');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -83,12 +83,12 @@ const MapComponent = () => {
               <div key={shop._id} className="p-4    bg-gray-100 rounded shadow">
                 <h3 className="font-bold text-lg">{shop.name}</h3>
                 <p className="text-sm text-gray-600">{shop.location}</p>
-                <button
-                  onClick={() => handleViewService(shop._id)}
+                <Link
+                  to={`/services/${shop._id}`}
                   className="mt-2 p-2 bg-blue-500 text-white rounded"
                 >
                   View Service
-                </button>
+                </Link>
               </div>
             ))}
           </div>
@@ -107,7 +107,7 @@ const MapComponent = () => {
             />
             {filteredShops.map((shop) => (
               <Marker
-                key={shop.id}
+                key={shop._id}
                 position={shop.position}
                 eventHandlers={{
                   click: () => handleMarkerClick(shop),
@@ -117,12 +117,12 @@ const MapComponent = () => {
                   <div>
                     <h3 className="font-bold">{shop.name}</h3>
                     <p className="text-sm">{shop.location}</p>
-                    <button
-                      onClick={() => handleViewService(shop.id)}
+                    <Link
+                      to={`/services/${shop._id}`}
                       className="mt-2 p-1 bg-blue-500 text-white rounded"
                     >
                       View Service
-                    </button>
+                    </Link>
                   </div>
                 </Popup>
               </Marker>
@@ -136,12 +136,12 @@ const MapComponent = () => {
         <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-white shadow-lg p-4 rounded-md z-20 w-80">
           <h2 className="text-lg font-semibold">{selectedShop.name}</h2>
           <p className="text-gray-600">Address: {selectedShop.location}</p>
-          <button
-            onClick={() => handleViewService(selectedShop.id)}
+          <Link to={`/services`}
+            
             className="mt-4 p-2 bg-blue-500 text-white rounded w-full"
           >
             View Service
-          </button>
+          </Link>
         </div>
       )}
     </div>

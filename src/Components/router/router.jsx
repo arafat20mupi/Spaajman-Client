@@ -1,6 +1,6 @@
- 
+
 import { createBrowserRouter } from 'react-router-dom';
- 
+
 
 import App from '../../App';
 import Home from '../Home/Home';
@@ -16,49 +16,50 @@ import JobApplicationForm from '../JobApplicationForm';
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />,  
+    element: <App />,
     children: [
       {
-        path: '/',  
+        path: '/',
         element: <Home />,
       },
       {
-        path: '/register',  
+        path: '/register',
         element: <Register />,
       },
       {
-        path: '/services/:shopId',  
+        path: '/services/:id',
         element: <ServicesPage />,
+        loader: ({ params }) => fetch(`https://server-coral-alpha-78.vercel.app/shop/${params.id}`)
       },
       {
-        path:"/login",
-        element:<Login/>
+        path: "/login",
+        element: <Login />
       },
       {
-        path:"/blog",
-        element: <Blog/>
+        path: "/blog",
+        element: <Blog />
       },
       {
-        path:"/blog/:id",
-        element:  <BlogDetails/>
+        path: "/blog/:id",
+        element: <BlogDetails />
       },
       {
-        path:"/post-job",
-        element:  <UserProfile/>
+        path: "/post-job",
+        element: <UserProfile />
       }
       ,
       {
-        path:"/job-search",
-        element:  <JobList/>
+        path: "/job-search",
+        element: <JobList />
       },
       {
-        path:"/job/:id/details",
-        element:<JobDetails/>
+        path: "/job/:id/details",
+        element: <JobDetails />
       }
       ,
       {
-        path:"/job/:id/apply",
-        element: <JobApplicationForm/>
+        path: "/job/:id/apply",
+        element: <JobApplicationForm />
       }
     ],
   },
