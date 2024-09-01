@@ -2,15 +2,13 @@ import { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { FaDirections } from 'react-icons/fa';
-import { fetchShops } from '../Data/FetchData';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const MapComponent = () => {
   const [search, setSearch] = useState('');
   const [shops, setShops] = useState([]);
   const [filteredShops, setFilteredShops] = useState([]);
   const [selectedShop, setSelectedShop] = useState(null);
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -49,9 +47,6 @@ const MapComponent = () => {
     setSelectedShop(shop);
   };
 
-  const handleViewService = (shopId) => {
-    navigate(`/services/${shopId}`);
-  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -83,12 +78,13 @@ const MapComponent = () => {
               <div key={shop._id} className="p-4    bg-gray-100 rounded shadow">
                 <h3 className="font-bold text-lg">{shop.name}</h3>
                 <p className="text-sm text-gray-600">{shop.location}</p>
-                <Link
-                  to={`/services/${shop._id}`}
+                
+                <Link to={`/services/${shop._id}`}><button
+
                   className="mt-2 p-2 bg-blue-500 text-white rounded"
                 >
                   View Service
-                </Link>
+                </button></Link>
               </div>
             ))}
           </div>
@@ -137,7 +133,7 @@ const MapComponent = () => {
           <h2 className="text-lg font-semibold">{selectedShop.name}</h2>
           <p className="text-gray-600">Address: {selectedShop.location}</p>
           <Link to={`/services`}
-            
+
             className="mt-4 p-2 bg-blue-500 text-white rounded w-full"
           >
             View Service

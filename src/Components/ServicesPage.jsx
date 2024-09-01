@@ -1,18 +1,14 @@
-import { useLoaderData, useParams } from 'react-router-dom';
-import { fetchShops } from '../Data/FetchData';
+import { Link, useLoaderData } from 'react-router-dom';
+// import { fetchShops } from '../Data/FetchData';
 import { FaDirections } from 'react-icons/fa';
 
 const ServicesPage = () => {
-// single data load
-const data = useLoaderData();
-console.log(data);
+  // single data load
+  const shop = useLoaderData();
 
 
-  const { shopId } = useParams();
-  const shop = fetchShops().find((shop) => shop.id === parseInt(shopId));
-  if (!shop) {
-    return <div className="p-4">Shop not found</div>;
-  }
+
+
 
   return (
     <div className="p-6 max-w-2xl mx-auto bg-white shadow-md rounded-md mt-20">
@@ -23,9 +19,9 @@ console.log(data);
 
       <p className="text-gray-600 mb-6">{shop.location}</p>
       <img
-        src={`https://via.placeholder.com/600x400?text=${shop.name}`} // Placeholder image, can replace with real images if available
+        src={shop.img}
         alt={`${shop.name}`}
-        className="w-full h-60 object-cover rounded mb-6"
+        className="w-[60%] mx-auto h-full object-cover rounded mb-6"
       />
       <div className="space-y-4">
         {shop.services.map((service, index) => (
@@ -37,6 +33,15 @@ console.log(data);
           </div>
         ))}
       </div>
+      <Link to={'/'}>
+        <button className="relative mt-5  inline-flex items-center px-12 py-3 overflow-hidden text-lg font-medium text-indigo-600 border-2 border-indigo-600 rounded-full hover:text-white group hover:bg-gray-50">
+          <span className="absolute left-0 block w-full h-0 transition-all bg-indigo-600 opacity-100 group-hover:h-full top-1/2 group-hover:top-0 duration-400 ease"></span>
+          <span className="absolute right-0 flex items-center justify-start w-10 h-10 duration-300 transform translate-x-full group-hover:translate-x-0 ease">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+          </span>
+          <span className="relative">Back now</span>
+        </button>
+      </Link>
     </div>
   );
 };
