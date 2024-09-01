@@ -3,62 +3,40 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { FaDirections } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import useShop from '../Hooks/useService';
+import Loading from './Loading/Loading';
 
 const MapComponent = () => {
   const [search, setSearch] = useState('');
-  const [shops, setShops] = useState([]);
   const [filteredShops, setFilteredShops] = useState([]);
   const [selectedShop, setSelectedShop] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('https://server-coral-alpha-78.vercel.app/shop');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const result = await response.json();
-        setShops(result);
-        setFilteredShops(result);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const [allShop, loading] = useShop();
 
-    fetchData();
-  }, []);
 
   useEffect(() => {
     setFilteredShops(
-      shops.filter((shop) =>
+      allShop.filter((shop) =>
         shop.name.toLowerCase().includes(search.toLowerCase()) ||
         shop.services.some((service) =>
           service.name.toLowerCase().includes(search.toLowerCase())
         )
       )
     );
-  }, [search, shops]);
+  }, [search, allShop]);
 
   const handleMarkerClick = (shop) => {
     setSelectedShop(shop);
   };
 
-
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+
   return (
     <div className="relative h-screen pt-16">
       <div className="flex flex-col-reverse md:flex-row p-4 h-full">
-
         <div className="flex flex-col w-full md:w-1/3 p-4 bg-white shadow-md rounded-md mb-4 md:mb-0 md:mr-4 z-10 overflow-hidden">
           <div className="flex items-center mb-4">
             <input
@@ -67,29 +45,24 @@ const MapComponent = () => {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="px-4 py-3.5 w-full text-gray-400 font-medium placeholder-gray-400 bg-white outline-none border border-gray-300 rounded-lg focus:ring focus:ring-indigo-300"
-
             />
             <FaDirections className=' text-3xl text-indigo-700 ml-4 cursor-pointer ' />
           </div>
 
-
-          <div className="grid grid-cols-1  gap-4 overflow-y-auto max-h-96">
+          <div className="grid grid-cols-1 gap-4 overflow-y-auto max-h-96">
             {filteredShops.map((shop) => (
-              <div key={shop._id} className="p-4    bg-gray-100 rounded shadow">
+              <div key={shop._id} className="p-4 bg-gray-100 rounded shadow">
                 <h3 className="font-bold text-lg">{shop.name}</h3>
                 <p className="text-sm text-gray-600">{shop.location}</p>
-                
-                <Link to={`/services/${shop._id}`}><button
-
-                  className="mt-2 p-2 bg-blue-500 text-white rounded"
-                >
-                  View Service
-                </button></Link>
+                <Link to={`/services/${shop._id}`}>
+                  <button className="mt-2 p-2 bg-blue-500 text-white rounded">
+                    View Service
+                  </button>
+                </Link>
               </div>
             ))}
           </div>
         </div>
-
 
         <div className="flex-1 h-96 md:h-auto relative">
           <MapContainer
@@ -127,13 +100,12 @@ const MapComponent = () => {
         </div>
       </div>
 
-
       {selectedShop && (
         <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-white shadow-lg p-4 rounded-md z-20 w-80">
           <h2 className="text-lg font-semibold">{selectedShop.name}</h2>
           <p className="text-gray-600">Address: {selectedShop.location}</p>
-          <Link to={`/services`}
-
+          <Link
+            to={`/services/${selectedShop._id}`}
             className="mt-4 p-2 bg-blue-500 text-white rounded w-full"
           >
             View Service
