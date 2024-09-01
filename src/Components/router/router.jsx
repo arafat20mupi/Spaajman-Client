@@ -41,7 +41,8 @@ export const router = createBrowserRouter([
       },
       {
         path: "/blog/:id",
-        element: <BlogDetails />
+        element: <BlogDetails />,
+        loader: ({ params }) => fetch(`https://server-coral-alpha-78.vercel.app/blogs/${params.id}`)
       },
       {
         path: "/post-job",

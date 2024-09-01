@@ -56,11 +56,11 @@ const Blog = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-5">
         {filteredBlogs.map((salonBlog) => (
-          <div key={salonBlog.id} className="border rounded-lg shadow-lg p-4 transition-transform duration-300 transform hover:scale-105">
+          <div key={salonBlog._id} className="flex flex-col items-center border rounded-lg shadow-lg p-4 transition-transform duration-300 transform hover:scale-105">
             <img
               src={salonBlog.image}
               alt={salonBlog.title}
-              className="w-full h-48 object-cover rounded-md"
+              className="w-fit h-48 object-cover rounded-md"
             />
             <h2 className="text-lg font-semibold mt-2">{salonBlog.title}</h2>
             <p className="text-sm text-gray-500">
@@ -79,11 +79,11 @@ const Blog = () => {
               ))}
             </div>
 
-            <Link
-              to={`/blog/${salonBlog.id}`}
-              className="mt-3 text-blue-500 hover:underline block"
-            >
-              View More
+            <Link to={`/blog/${salonBlog._id}`}>
+              <button className="my-5 w-full underline underline-offset-4 hover:no-underline relative inline-flex items-center justify-start px-6 py-3 overflow-hidden font-medium transition-all bg-white rounded hover:bg-white group">
+                <span className="w-48 h-48 rounded rotate-[-40deg] bg-purple-600 absolute bottom-0 left-0 -translate-x-full ease-out duration-500 transition-all translate-y-full mb-9 ml-9 group-hover:ml-0 group-hover:mb-32 group-hover:translate-x-0"></span>
+                <span className="relative w-full text-left text-black transition-colors duration-300 ease-in-out group-hover:text-white">View More</span>
+              </button>
             </Link>
           </div>
         ))}
