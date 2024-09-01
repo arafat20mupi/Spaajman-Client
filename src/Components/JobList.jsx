@@ -1,23 +1,24 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const JobList = () => {
   const [selectedTags, setSelectedTags] = useState([]);
+  const [jobs, setJobs] = useState([]);
 
-  const jobs = [
-    { id: 1, title: 'Spa Manager', location: 'Dhaka', description: 'Manage daily spa operations.', tags: ['Spa'] },
-    { id: 2, title: 'Salon Hair Stylist', location: 'Bogura', description: 'Provide hairstyling services.', tags: ['Salon'] },
-    { id: 3, title: 'Massage Therapist', location: 'Chittagong', description: 'Provide professional massage therapy.', tags: ['Massage'] },
-    { id: 4, title: 'Nail Technician', location: 'Sylhet', description: 'Perform manicures and pedicures.', tags: ['Salon'] },
-    { id: 5, title: 'Receptionist', location: 'Dhaka', description: 'Manage front desk and customer service.', tags: ['Spa'] },
-    { id: 6, title: 'Beauty Consultant', location: 'Rajshahi', description: 'Advise clients on beauty products.', tags: ['Salon', 'Spa'] },
-    { id: 7, title: 'Hair Color Specialist', location: 'Dhaka', description: 'Specialize in hair coloring techniques.', tags: ['Salon'] },
-    { id: 8, title: 'Aesthetician', location: 'Chittagong', description: 'Provide skincare treatments and facials.', tags: ['Spa'] },
- 
-  ];
+
+
+  useEffect(() => {
+    const job = async () => {
+      const response = await fetch('https://server-coral-alpha-78.vercel.app/jobs');
+      const data = await response.json();
+      setJobs(data);
+
+    };
+    job();
+  }, []);
 
   const handleTagChange = (tag) => {
-    setSelectedTags((prevTags) => 
+    setSelectedTags((prevTags) =>
       prevTags.includes(tag) ? [] : [tag]
     );
   };
@@ -29,7 +30,7 @@ const JobList = () => {
   return (
     <div className="p-16 pt-24">
       <h1 className="text-3xl font-bold mb-6 text-center">Available Jobs</h1>
-      
+
       {/* Tag Filter Buttons */}
       <div className="text-center mb-6">
         <button
@@ -51,16 +52,16 @@ const JobList = () => {
           Massage
         </button>
       </div>
-      
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredJobs.map((job) => (
-          <div key={job.id} className="border border-gray-300 p-6 rounded-lg shadow-lg bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out">
+          <div key={job._id} className="border border-gray-300 p-6 rounded-lg shadow-lg bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out">
             <h2 className="text-2xl font-semibold mb-2 text-gray-800">{job.title}</h2>
             <p className="text-gray-600 mb-1 text-sm font-medium">{job.location}</p>
             <p className="text-gray-700 mb-4">{job.description}</p>
             <div className="flex justify-between">
               <Link
-                to={`/job/${job.id}/details`}
+                to={`/job-details/${job._id}`}
                 className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-300 ease-in-out"
               >
                 Details
