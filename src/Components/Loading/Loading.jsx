@@ -7,7 +7,7 @@ ring.register()
 
 const Loading = () => {
     return (
-        <div className='flex justify-center items-center mt-96'>
+        <div className='flex justify-center items-center mt-60'>
             <l-trefoil
                 size="40"
                 stroke="4"

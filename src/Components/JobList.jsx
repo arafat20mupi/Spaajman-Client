@@ -1,21 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import useJobs from '../Hooks/useJobs';
+import Loading from './Loading/Loading';
 
 const JobList = () => {
   const [selectedTags, setSelectedTags] = useState([]);
-  const [jobs, setJobs] = useState([]);
+  // const [jobs, setJobs] = useState([]);
 
+  const [jobs, loading] = useJobs()
 
-
-  useEffect(() => {
-    const job = async () => {
-      const response = await fetch('https://server-coral-alpha-78.vercel.app/jobs');
-      const data = await response.json();
-      setJobs(data);
-
-    };
-    job();
-  }, []);
+  if (loading) return <Loading />
 
   const handleTagChange = (tag) => {
     setSelectedTags((prevTags) =>

@@ -1,11 +1,11 @@
 import axios from "axios";
 
-const axiosPublic = axios.create({
+const axiosPrivate = axios.create({
     baseURL: "https://server-coral-alpha-78.vercel.app"
     // baseURL: "http://localhost:5000"
 });
-const useAxiosPublic = () => {
-    return axiosPublic;
+const useAxiosPrivate = () => {
+    return axiosPrivate;
 };
 
-export default useAxiosPublic;
+export default useAxiosPrivate;
