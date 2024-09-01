@@ -1,175 +1,94 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-const salonSpaBlogs = [
-  {
-    id: 1,
-    title: "Top 5 Haircut Trends for 2024",
-    description: "Explore the latest haircut trends that are set to dominate salons in 2024.",
-    image: "  https://i.postimg.cc/Z5MqYzTp/1.jpg",
-    author: "Alice Parker",
-    date: "2024-08-25",
-    tags: ["Haircut", "Trends", "Salon"],
-  },
-  {
-    id: 2,
-    title: "The Ultimate Guide to Spa Treatments",
-    description: "Discover various spa treatments that can help you relax and rejuvenate.",
-    image: " https://i.postimg.cc/YqXr8BLZ/10.jpg",
-    author: "Bob Johnson",
-    date: "2024-08-26",
-    tags: ["Spa", "Treatments", "Wellness"],
-  },
-  {
-    id: 3,
-    title: "10 Must-Have Hair Care Products",
-    description: "Find out which hair care products are essential for maintaining healthy hair.",
-    image: " https://i.postimg.cc/jdqqzS2y/11.jpg",
-    author: "Emily Davis",
-    date: "2024-08-27",
-    tags: ["Hair Care", "Products", "Salon"],
-  },
-  {
-    id: 4,
-    title: "How to Choose the Right Facial for Your Skin Type",
-    description: "Learn how to select the perfect facial treatment based on your skin type.",
-    image: " https://i.postimg.cc/Nj5gzC1M/12.jpg",
-    author: "David Smith",
-    date: "2024-08-28",
-    tags: ["Facial", "Skin Care", "Spa"],
-  },
-  {
-    id: 5,
-    title: "The Benefits of Regular Massage Therapy",
-    description: "Understand the health benefits of incorporating regular massage therapy into your routine.",
-    image: " https://i.postimg.cc/7LJZft6c/2.jpg",
-    author: "Sophia Brown",
-    date: "2024-08-29",
-    tags: ["Massage", "Therapy", "Wellness"],
-  },
-  {
-    id: 6,
-    title: "DIY Hair Masks for Every Hair Type",
-    description: "Create effective hair masks at home tailored to your hair type and needs.",
-    image: " https://i.postimg.cc/rsj8vvnd/8.jpg",
-    author: "Michael Lee",
-    date: "2024-08-30",
-    tags: ["Hair Masks", "DIY", "Salon"],
-  },
-  {
-    id: 7,
-    title: "The Rise of Organic Spa Treatments",
-    description: "Explore the trend of organic and natural spa treatments and their benefits.",
-    image: " https://i.postimg.cc/BZBQLKSq/9.jpg",
-    author: "Olivia Wilson",
-    date: "2024-08-31",
-    tags: ["Organic", "Spa", "Wellness"],
-  },
-  {
-    id: 8,
-    title: "Essential Tips for Maintaining a Perfect Manicure",
-    description: "Get tips and tricks for keeping your manicure looking flawless.",
-    image: " https://i.postimg.cc/B6WQD5Pv/5.jpg",
-    author: "James Taylor",
-    date: "2024-09-01",
-    tags: ["Manicure", "Nail Care", "Salon"],
-  },
-  {
-    id: 9,
-    title: "How to Create a Relaxing Home Spa Experience",
-    description: "Transform your home into a relaxing spa with these easy tips and tricks.",
-    image: " https://i.postimg.cc/rsj8vvnd/8.jpg",
-    author: "Ava White",
-    date: "2024-09-02",
-    tags: ["Home Spa", "Relaxation", "Wellness"],
-  },
-  {
-    id: 10,
-    title: "The Top 5 Anti-Aging Treatments in Spas",
-    description: "Explore the most effective anti-aging treatments available at spas.",
-    image: "https://i.postimg.cc/ydF6TJ0y/7.jpg",
-    author: "Liam Harris",
-    date: "2024-09-03",
-    tags: ["Anti-Aging", "Spa", "Treatments"],
-  },
-  
-];
+import useBlogs from '../Hooks/useBlogs';
+import Loading from './Loading/Loading';
 
 const Blog = () => {
-  const [salon, setSalon] = useState(salonSpaBlogs);
   const [searchVal, setSearchVal] = useState("");
+  const [filteredBlogs, setFilteredBlogs] = useState([]);
+  const [salon, loading] = useBlogs();
 
- 
-const handleBlog=()=>{
-if(searchVal ===" "){
-  setSalon(salonSpaBlogs)
-  return
-}
-const filterBySearch =salonSpaBlogs.filter((item)=>{
-  const isTitleMatch =item.title.toLowerCase().includes(searchVal.toLowerCase())
-  const isTagMatch =item.tags.some((tag)=>{
-    tag.toLowerCase().includes(searchVal.toLowerCase())
 
-  })
- return isTagMatch || isTitleMatch
-})
-setSalon(filterBySearch)
-} 
+
+  useEffect(() => {
+    setFilteredBlogs(salon);
+  }, [salon]);
+
+  useEffect(() => {
+    handleBlog();
+  }, [searchVal]);
+
+  const handleBlog = () => {
+    if (searchVal.trim() === "") {
+      setFilteredBlogs(salon);
+      return;
+    }
+    const filterBySearch = salon.filter((item) => {
+      const isTitleMatch = item.title.toLowerCase().includes(searchVal.toLowerCase());
+      const isTagMatch = item.tags.some((tag) =>
+        tag.toLowerCase().includes(searchVal.toLowerCase())
+      );
+      return isTitleMatch || isTagMatch;
+    });
+    setFilteredBlogs(filterBySearch);
+  };
+
+  if (loading) return <Loading />
   return (
     <div className="p-5">
- 
-    <h1 className="text-2xl font-bold mb-5">Salon and Spa Blogs</h1>
+      <h1 className="text-2xl font-bold mb-5">Salon and Spa Blogs</h1>
 
- 
-<div className="flex justify-center bg-gray-100 p-4 rounded-lg">
-  <input
-    type="text"
-    value={searchVal}
-    onChange={(e) => setSearchVal(e.target.value)}
-    placeholder="Search blogs by title or tags..."
-    className="border p-2 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-  />
-  <button onClick={handleBlog} className="bg-blue-500 text-white p-2 rounded-r-lg transition-colors duration-300 hover:bg-blue-600">
-    Search
-  </button>
-</div>
-  
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-5">
-      {salon.map((salon) => (
-        <div key={salon.id} className="border rounded-lg shadow-lg p-4 transition-transform duration-300 transform hover:scale-105">
-          <img
-            src={salon.image}
-            alt={salon.title}
-            className="w-full h-48 object-cover rounded-md"
-          />
-          <h2 className="text-lg font-semibold mt-2">{salon.title}</h2>
-          <p className="text-sm text-gray-500">
-            {salon.date} by {salon.author}
-          </p>
-          <p className="mt-2 text-sm text-gray-700">{salon.description}</p>
-  
-          {/* Display Tags */}
-          <div className="mt-3">
-            {salon.tags.map((tag, index) => (
-              <span
-                key={index}
-                className="inline-block bg-gray-200 text-gray-700 text-xs font-medium mr-2 px-3 py-1 rounded hover:bg-gray-300 transition-colors duration-300"
-              >
-                {tag}
-              </span>
-            ))}
+      <div className="flex justify-center bg-gray-100 p-4 rounded-lg">
+        <input
+          type="text"
+          value={searchVal}
+          onChange={(e) => setSearchVal(e.target.value)}
+          placeholder="Search blogs by title or tags..."
+          className="border p-2 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        <button
+          onClick={handleBlog}
+          className="bg-blue-500 text-white p-2 rounded-r-lg transition-colors duration-300 hover:bg-blue-600"
+        >
+          Search
+        </button>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-5">
+        {filteredBlogs.map((salonBlog) => (
+          <div key={salonBlog.id} className="border rounded-lg shadow-lg p-4 transition-transform duration-300 transform hover:scale-105">
+            <img
+              src={salonBlog.image}
+              alt={salonBlog.title}
+              className="w-full h-48 object-cover rounded-md"
+            />
+            <h2 className="text-lg font-semibold mt-2">{salonBlog.title}</h2>
+            <p className="text-sm text-gray-500">
+              {salonBlog.date} by {salonBlog.author}
+            </p>
+            <p className="mt-2 text-sm text-gray-700">{salonBlog.description}</p>
+
+            <div className="mt-3">
+              {salonBlog.tags.map((tag, index) => (
+                <span
+                  key={index}
+                  className="inline-block bg-gray-200 text-gray-700 text-xs font-medium mr-2 px-3 py-1 rounded hover:bg-gray-300 transition-colors duration-300"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+
+            <Link
+              to={`/blog/${salonBlog.id}`}
+              className="mt-3 text-blue-500 hover:underline block"
+            >
+              View More
+            </Link>
           </div>
-  
-          <Link
-            to={`/blog/${salon.id}`}
-            className="mt-3 text-blue-500  hover:underline block"
-          >
-            View More
-          </Link>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
-  </div>
-  
   );
 };
 

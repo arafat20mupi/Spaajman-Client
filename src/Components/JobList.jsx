@@ -5,8 +5,6 @@ import Loading from './Loading/Loading';
 
 const JobList = () => {
   const [selectedTags, setSelectedTags] = useState([]);
-  // const [jobs, setJobs] = useState([]);
-
   const [jobs, loading] = useJobs()
 
   if (loading) return <Loading />
@@ -25,7 +23,6 @@ const JobList = () => {
     <div className="p-16 pt-24">
       <h1 className="text-3xl font-bold mb-6 text-center">Available Jobs</h1>
 
-      {/* Tag Filter Buttons */}
       <div className="text-center mb-6">
         <button
           onClick={() => handleTagChange('Salon')}
