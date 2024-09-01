@@ -1,5 +1,3 @@
- 
-import React from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchShops } from '../Data/FetchData';
 import { FaDirections } from 'react-icons/fa';

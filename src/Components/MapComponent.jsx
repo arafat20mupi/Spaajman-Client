@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import {   FaDirections } from 'react-icons/fa';
+import { FaDirections } from 'react-icons/fa';
 import { fetchShops } from '../Data/FetchData';
 import { useNavigate } from 'react-router-dom';
 
@@ -11,26 +11,27 @@ const MapComponent = () => {
   const [filteredShops, setFilteredShops] = useState([]);
   const [selectedShop, setSelectedShop] = useState(null);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
- 
-    const fetchShopData = async () => {
+    const fetchData = async () => {
       try {
-        const fetchedShops = fetchShops().map((shop, index) => ({
-          ...shop,
-          position: [
-            23.8103 + ((index * 0.01) % 0.05),
-            90.4125 + ((index * 0.01) % 0.05),
-          ],
-        }));
-        setShops(fetchedShops);
-        setFilteredShops(fetchedShops);
+        const response = await fetch('http://localhost:5000/shop');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const result = await response.json();
+        setShops(result);
+        setFilteredShops(result);
       } catch (error) {
-        console.error('Error fetching shops:', error);
+        setError(error.message);
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchShopData();
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -52,10 +53,17 @@ const MapComponent = () => {
     navigate(`/services/${shopId}`);
   };
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
   return (
     <div className="relative h-screen pt-16">
       <div className="flex flex-col-reverse md:flex-row p-4 h-full">
-      
+
         <div className="flex flex-col w-full md:w-1/3 p-4 bg-white shadow-md rounded-md mb-4 md:mb-0 md:mr-4 z-10 overflow-hidden">
           <div className="flex items-center mb-4">
             <input
@@ -66,17 +74,17 @@ const MapComponent = () => {
               className="px-4 py-3.5 w-full text-gray-400 font-medium placeholder-gray-400 bg-white outline-none border border-gray-300 rounded-lg focus:ring focus:ring-indigo-300"
 
             />
-         <FaDirections className=' text-3xl text-indigo-700 ml-4 cursor-pointer ' />
+            <FaDirections className=' text-3xl text-indigo-700 ml-4 cursor-pointer ' />
           </div>
 
-        
+
           <div className="grid grid-cols-1  gap-4 overflow-y-auto max-h-96">
             {filteredShops.map((shop) => (
-              <div key={shop.id} className="p-4    bg-gray-100 rounded shadow">
+              <div key={shop._id} className="p-4    bg-gray-100 rounded shadow">
                 <h3 className="font-bold text-lg">{shop.name}</h3>
                 <p className="text-sm text-gray-600">{shop.location}</p>
                 <button
-                  onClick={() => handleViewService(shop.id)}
+                  onClick={() => handleViewService(shop._id)}
                   className="mt-2 p-2 bg-blue-500 text-white rounded"
                 >
                   View Service
@@ -86,7 +94,7 @@ const MapComponent = () => {
           </div>
         </div>
 
- 
+
         <div className="flex-1 h-96 md:h-auto relative">
           <MapContainer
             center={[23.8103, 90.4125]}
@@ -123,7 +131,7 @@ const MapComponent = () => {
         </div>
       </div>
 
- 
+
       {selectedShop && (
         <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-white shadow-lg p-4 rounded-md z-20 w-80">
           <h2 className="text-lg font-semibold">{selectedShop.name}</h2>
