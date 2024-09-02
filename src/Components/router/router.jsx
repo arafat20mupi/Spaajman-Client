@@ -29,7 +29,7 @@ export const router = createBrowserRouter([
       {
         path: '/services/:id',
         element: <ServicesPage />,
-        loader: ({ params }) => fetch(`https://server-coral-alpha-78.vercel.app/shop/${params.id}`)
+        loader: ({ params }) => fetch(`https://spaajman-server.vercel.app/shop/${params.id}`)
       },
       {
         path: "/login",
@@ -42,7 +42,7 @@ export const router = createBrowserRouter([
       {
         path: "/blog/:id",
         element: <BlogDetails />,
-        loader: ({ params }) => fetch(`https://server-coral-alpha-78.vercel.app/blogs/${params.id}`)
+        loader: ({ params }) => fetch(`https://spaajman-server.vercel.app/blogs/${params.id}`)
       },
       {
         path: "/post-job",
@@ -56,7 +56,7 @@ export const router = createBrowserRouter([
       {
         path: "/job-details/:id",
         element: <JobDetails />,
-        loader: ({ params }) => fetch(`https://server-coral-alpha-78.vercel.app/jobs/${params.id}`)
+        loader: ({ params }) => fetch(`https://spaajman-server.vercel.app/jobs/${params.id}`)
       }
       ,
       {
