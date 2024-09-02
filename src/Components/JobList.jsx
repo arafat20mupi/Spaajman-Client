@@ -51,18 +51,32 @@ const JobList = () => {
             <p className="text-gray-600 mb-1 text-sm font-medium">{job.location}</p>
             <p className="text-gray-700 mb-4">{job.description}</p>
             <div className="flex justify-between">
+          
               <Link
-                to={`/job-details/${job._id}`}
-                className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-300 ease-in-out"
-              >
-                Details
-              </Link>
+           to={`/job-details/${job._id}`}
+      className="rounded-md px-3.5 py-2    bg-indigo-400 m-1 overflow-hidden relative group cursor-pointer border-2 font-medium border-indigo-600 text-indigo-600 text-white"
+    >
+      <span
+        className="absolute w-64 h-0 transition-all duration-300 origin-center rotate-45 -translate-x-20 bg-indigo-600 top-1/2 group-hover:h-64 group-hover:-translate-y-32 ease"
+      ></span>
+      <span className="relative text-indigo-600 transition duration-300 group-hover:text-white ease">
+   Details
+      </span>
+    </Link>
+             
               <Link
-                to={`/job/${job.id}/apply`}
-                className="bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors duration-300 ease-in-out"
-              >
-                Apply Now
-              </Link>
+        to={`/job/${job.id}/apply`}
+      className="relative px-5 py-3 overflow-hidden font-medium text-gray-600 border  bg-green-100 rounded-lg shadow-inner group"
+    >
+      <span className="absolute top-0 left-0 w-0 h-0 transition-all duration-200 border-t-2 border-gray-600 group-hover:w-full ease"></span>
+      <span className="absolute bottom-0 right-0 w-0 h-0 transition-all duration-200 border-b-2 border-gray-600 group-hover:w-full ease"></span>
+      <span className="absolute top-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-gray-600 group-hover:h-full ease"></span>
+      <span className="absolute bottom-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-gray-600 group-hover:h-full ease"></span>
+      <span className="absolute inset-0 w-full h-full duration-300 delay-300  bg-green-800  opacity-0 group-hover:opacity-100"></span>
+      <span className="relative transition-colors duration-300 delay-200 group-hover:text-white ease">
+     Apply Now
+      </span>
+    </Link>
             </div>
           </div>
         ))}
