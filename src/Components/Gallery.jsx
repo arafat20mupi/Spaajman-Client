@@ -84,7 +84,8 @@ const Gallery = () => {
           }
 
           {/* Pagination start here */}
-          <div className="flex items-center justify-center space-x-1 dark:text-gray-800">
+          <div className='flex items-center'></div>
+          <div className=" justify-center space-x-1 dark:text-gray-800">
             <button title="previous" type="button" className="inline-flex items-center justify-center w-8 h-8 py-0 border rounded-md shadow-md dark:bg-gray-50 dark:border-gray-100">
               <svg viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className="w-4">
                 <polyline points="15 18 9 12 15 6"></polyline>
