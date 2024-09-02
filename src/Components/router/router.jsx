@@ -13,6 +13,7 @@ import UserProfile from '../JopPOst';
 import JobList from '../JobList';
 import JobDetails from '../JobDetails';
 import JobApplicationForm from '../JobApplicationForm';
+import Gallery from '../Gallery';
 export const router = createBrowserRouter([
   {
     path: '/',
@@ -62,6 +63,10 @@ export const router = createBrowserRouter([
       {
         path: "/job/:id/apply",
         element: <JobApplicationForm />
+      },
+      {
+        path: "/gallery",
+        element: <Gallery />
       }
     ],
   },

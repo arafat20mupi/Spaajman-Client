@@ -114,7 +114,7 @@
 
 // export default Navbar;
 import React, { useState, useContext } from 'react';
-import { FaHome, FaSuitcase, FaBlogger } from 'react-icons/fa';
+import { FaHome,FaImage, FaSuitcase, FaBlogger } from 'react-icons/fa';
 import { IoMdAdd } from 'react-icons/io';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../Provider/AuthProvider';
@@ -171,6 +171,12 @@ const Navbar = () => {
             <li className="flex items-center text-gray-800 font-medium hover:text-indigo-600 cursor-pointer transition duration-300">
               <FaHome className="mr-2" />
               Home
+            </li>
+          </Link>
+          <Link to="/gallery" >
+            <li className="flex items-center text-gray-800 font-medium hover:text-indigo-600 cursor-pointer transition duration-300">
+            <FaImage className="mr-2" />
+              Gallery
             </li>
           </Link>
           

@@ -66,7 +66,7 @@ const Slider = () => {
     <>
       <div className='mx-5 lg:mx-20 bg-white h-full'>
         <div className='text-center'>
-          <h1 className='text-indigo-600 text-3xl md:text-5xl lg:text-7xl py-9'>A Peaceful Retreat</h1>
+          <h1 className='text-indigo-600 text-3xl md:text-5xl lg:text-7xl py-9 slider-h1'>A Peaceful Retreat</h1>
           <p className='lg:text-xl py-3'>
             Step into our peaceful retreat and leave the stress of the outside world behind. Spaajman is your personal escape, designed to refresh and revitalize.
           </p>
