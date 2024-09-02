@@ -1,6 +1,5 @@
-
-import React from 'react';
-import { useForm } from 'react-hook-form';
+import React from "react";
+import { useForm } from "react-hook-form";
 
 const UserProfile = () => {
   const {
@@ -11,7 +10,6 @@ const UserProfile = () => {
 
   const onSubmit = (data) => {
     console.log(data);
- 
   };
 
   return (
@@ -57,25 +55,39 @@ const UserProfile = () => {
               <div className="w-full md:w-9/12">
                 <div className="flex flex-wrap -m-3">
                   <div className="w-full md:w-1/3 p-3">
-                    <p className="text-sm text-coolGray-800 font-semibold">Your Name:</p>
+                    <p className="text-sm text-coolGray-800 font-semibold">
+                      Your Name:
+                    </p>
                   </div>
                   <div className="w-full md:w-1/3 p-3">
                     <input
-                      {...register('firstName', { required: 'First name is required' })}
+                      {...register("firstName", {
+                        required: "First name is required",
+                      })}
                       className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-indigo-600 border border-coolGray-200 rounded-lg shadow-input"
                       type="text"
                       placeholder="John"
                     />
-                    {errors.firstName && <p className="text-red-600 text-xs">{errors.firstName.message}</p>}
+                    {errors.firstName && (
+                      <p className="text-red-600 text-xs">
+                        {errors.firstName.message}
+                      </p>
+                    )}
                   </div>
                   <div className="w-full md:w-1/3 p-3">
                     <input
-                      {...register('lastName', { required: 'Last name is required' })}
+                      {...register("lastName", {
+                        required: "Last name is required",
+                      })}
                       className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-indigo-600 border border-coolGray-200 rounded-lg shadow-input"
                       type="text"
                       placeholder="Doe"
                     />
-                    {errors.lastName && <p className="text-red-600 text-xs">{errors.lastName.message}</p>}
+                    {errors.lastName && (
+                      <p className="text-red-600 text-xs">
+                        {errors.lastName.message}
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
@@ -86,22 +98,29 @@ const UserProfile = () => {
               <div className="w-full md:w-9/12">
                 <div className="flex flex-wrap -m-3">
                   <div className="w-full md:w-1/3 p-3">
-                    <p className="text-sm text-coolGray-800 font-semibold">Email address</p>
+                    <p className="text-sm text-coolGray-800 font-semibold">
+                      Email address
+                    </p>
                   </div>
                   <div className="w-full md:flex-1 p-3">
                     <input
-                      {...register('email', {
-                        required: 'Email is required',
+                      {...register("email", {
+                        required: "Email is required",
                         pattern: {
-                          value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                          message: 'Invalid email address',
+                          value:
+                            /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                          message: "Invalid email address",
                         },
                       })}
                       className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-indigo-600 border border-coolGray-200 rounded-lg shadow-input"
                       type="text"
                       placeholder="johndoe@example.com"
                     />
-                    {errors.email && <p className="text-red-600 text-xs">{errors.email.message}</p>}
+                    {errors.email && (
+                      <p className="text-red-600 text-xs">
+                        {errors.email.message}
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
@@ -112,11 +131,13 @@ const UserProfile = () => {
               <div className="w-full md:w-9/12">
                 <div className="flex flex-wrap -m-3">
                   <div className="w-full md:w-1/3 p-3">
-                    <p className="text-sm text-coolGray-800 font-semibold">Your Living City</p>
+                    <p className="text-sm text-coolGray-800 font-semibold">
+                      Your Living City
+                    </p>
                   </div>
                   <div className="w-full md:flex-1 p-3">
                     <input
-                      {...register('city')}
+                      {...register("city")}
                       className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-indigo-600 border border-coolGray-200 rounded-lg shadow-input"
                       type="text"
                       placeholder="Your living city"
@@ -131,11 +152,13 @@ const UserProfile = () => {
               <div className="w-full md:w-9/12">
                 <div className="flex flex-wrap -m-3">
                   <div className="w-full md:w-1/3 p-3">
-                    <p className="text-sm text-coolGray-800 font-semibold">Your WhatsApp Number</p>
+                    <p className="text-sm text-coolGray-800 font-semibold">
+                      Your WhatsApp Number
+                    </p>
                   </div>
                   <div className="w-full md:flex-1 p-3">
                     <input
-                      {...register('whatsappNumber')}
+                      {...register("whatsappNumber")}
                       className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-indigo-600 border border-coolGray-200 rounded-lg shadow-input"
                       type="text"
                       placeholder="Your WhatsApp number"
@@ -148,7 +171,66 @@ const UserProfile = () => {
               <div className="w-full md:w-9/12">
                 <div className="flex flex-wrap -m-3">
                   <div className="w-full md:w-1/3 p-3">
-                    <p className="text-sm text-coolGray-800 font-semibold">Country</p>
+                    <p className="text-sm text-coolGray-800 font-semibold">
+                      Your  Responsibilities
+                    </p>
+                  </div>
+                  <div className="w-full md:flex-1 p-3">
+                    <textarea
+                      {...register("  Your  Responsibilities")}
+                      className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-indigo-600 border border-coolGray-200 rounded-lg shadow-input"
+                      type="text"
+                      placeholder="Your Company Responsibilities"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="py-6 border-b border-coolGray-100">
+              <div className="w-full md:w-9/12">
+                <div className="flex flex-wrap -m-3">
+                  <div className="w-full md:w-1/3 p-3">
+                    <p className="text-sm text-coolGray-800 font-semibold">
+                      Your  Benefits
+                    </p>
+                  </div>
+                  <div className="w-full md:flex-1 p-3">
+                    <textarea
+                      {...register("  Your  Benefits")}
+                      className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-indigo-600 border border-coolGray-200 rounded-lg shadow-input"
+                      type="text"
+                      placeholder="Your Company Benefits"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="py-6 border-b border-coolGray-100">
+              <div className="w-full md:w-9/12">
+                <div className="flex flex-wrap -m-3">
+                  <div className="w-full md:w-1/3 p-3">
+                    <p className="text-sm text-coolGray-800 font-semibold">
+                      Your   Requirements
+                    </p>
+                  </div>
+                  <div className="w-full md:flex-1 p-3">
+                    <textarea
+                      {...register( "     Your   Requirements")}
+                      className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-indigo-600 border border-coolGray-200 rounded-lg shadow-input"
+                      type="text"
+                      placeholder="Your Company  Requirements"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="py-6 border-b border-coolGray-100">
+              <div className="w-full md:w-9/12">
+                <div className="flex flex-wrap -m-3">
+                  <div className="w-full md:w-1/3 p-3">
+                    <p className="text-sm text-coolGray-800 font-semibold">
+                      Country
+                    </p>
                   </div>
                   <div className="w-full md:flex-1 p-3">
                     <div className="relative">
@@ -162,11 +244,14 @@ const UserProfile = () => {
                       >
                         <path d="..." fill="#8896AB" />
                       </svg>
-                      <select {...register('selected')} className="appearance-none w-full py-2.5 px-4 text-coolGray-900 text-base font-normal bg-white border outline-none border-coolGray-200 hover:border-indigo-600 rounded-lg shadow-input">
-                  <option>UAE</option>
-                  <option>Poland</option>
-                  <option>France</option>
-                </select>
+                      <select
+                        {...register("selected")}
+                        className="appearance-none w-full py-2.5 px-4 text-coolGray-900 text-base font-normal bg-white border outline-none border-coolGray-200 hover:border-indigo-600 rounded-lg shadow-input"
+                      >
+                        <option>UAE</option>
+                        <option>Poland</option>
+                        <option>France</option>
+                      </select>
                     </div>
                   </div>
                 </div>
@@ -176,7 +261,9 @@ const UserProfile = () => {
               <div className="w-full md:w-9/12">
                 <div className="flex flex-wrap -m-3">
                   <div className="w-full md:w-1/3 p-3">
-                    <p className="text-sm text-coolGray-800 font-semibold">Photo</p>
+                    <p className="text-sm text-coolGray-800 font-semibold">
+                      Photo
+                    </p>
                     <p className="text-xs text-coolGray-500 font-medium">
                       Lorem ipsum dolor sit amet
                     </p>
@@ -194,18 +281,21 @@ const UserProfile = () => {
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
                       >
-                        <path
-                          d="..."
-                          fill="currentColor"
-                        />
+                        <path d="..." fill="currentColor" />
                       </svg>
                       <p className="mb-1 text-sm text-coolGray-800 font-medium">
-                        <span className="text-indigo-600">Click to Upload a file</span> or drag and drop
+                        <span className="text-indigo-600">
+                          Click to Upload a file
+                        </span>{" "}
+                        or drag and drop
                       </p>
                       <p className="text-xs text-coolGray-500 font-medium">
                         PNG, JPG, GIF or up to 10MB
                       </p>
-                      <input className="absolute top-0 left-0 w-full h-full opacity-0" type="file" />
+                      <input
+                        className="absolute top-0 left-0 w-full h-full opacity-0"
+                        type="file"
+                      />
                     </div>
                   </div>
                 </div>
@@ -215,38 +305,44 @@ const UserProfile = () => {
               <div className="w-full md:w-9/12">
                 <div className="flex flex-wrap -m-3">
                   <div className="w-full md:w-1/3 p-3">
-                    <p className="text-sm text-coolGray-800 font-semibold">Role</p>
+                    <p className="text-sm text-coolGray-800 font-semibold">
+                      Role
+                    </p>
                   </div>
                   <div className="w-full md:flex-1 p-3">
-                    <select       {...register('selected')} className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-indigo-600 border border-coolGray-200 rounded-lg shadow-input">
+                    <select
+                      {...register("selected")}
+                      className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-indigo-600 border border-coolGray-200 rounded-lg shadow-input"
+                    >
                       <option value="">Select a role</option>
-                      <option value="barber">Barber Specialist</option>
-                      <option value="spa">Spa Specialist</option>
+                      <option value="salon">Salon</option>
+                      <option value="spa">Spa</option>
+                      <option value="massage">Massage</option>
                     </select>
                   </div>
                 </div>
               </div>
             </div>
             <div className="py-6 border-b border-coolGray-100">
-             <div className="w-full md:w-9/12">
-                 <div className="flex flex-wrap -m-3">
-                   <div className="w-full md:w-1/3 p-3">
-                     <p className="text-sm text-coolGray-800 font-semibold">  Your UAE Number </p>
+              <div className="w-full md:w-9/12">
+                <div className="flex flex-wrap -m-3">
+                  <div className="w-full md:w-1/3 p-3">
+                    <p className="text-sm text-coolGray-800 font-semibold">
+                      {" "}
+                      Your UAE Number{" "}
+                    </p>
                   </div>
-                    <div className="w-full md:flex-1 p-3">
-                  <input
-                  {...register('UAE Number')}
+                  <div className="w-full md:flex-1 p-3">
+                    <input
+                      {...register("UAE Number")}
                       className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-indigo-600 border border-coolGray-200 rounded-lg shadow-input"
                       type="text"
                       placeholder=" your UAE Number"
                     />
                   </div>
-                  
                 </div>
-                
               </div>
             </div>
-
           </div>
         </div>
       </section>

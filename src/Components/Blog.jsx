@@ -1,3 +1,4 @@
+ 
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import useBlogs from '../Hooks/useBlogs';
@@ -8,15 +9,9 @@ const Blog = () => {
   const [filteredBlogs, setFilteredBlogs] = useState([]);
   const [salon, loading] = useBlogs();
 
-
-
   useEffect(() => {
     setFilteredBlogs(salon);
   }, [salon]);
-
-  useEffect(() => {
-    handleBlog();
-  }, [searchVal]);
 
   const handleBlog = () => {
     if (searchVal.trim() === "") {
@@ -33,7 +28,8 @@ const Blog = () => {
     setFilteredBlogs(filterBySearch);
   };
 
-  if (loading) return <Loading />
+  if (loading) return <Loading />;
+  
   return (
     <div className="p-5">
       <h1 className="text-2xl font-bold mb-5">Salon and Spa Blogs</h1>

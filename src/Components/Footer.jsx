@@ -1,91 +1,66 @@
+ 
+ 
 import React from "react";
-import { FaInstagram, FaWhatsapp } from "react-icons/fa";
-import { FaFacebook, FaSquareXTwitter } from "react-icons/fa6";
+import { FaInstagram, FaWhatsapp, FaFacebook, FaTwitter } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="bg-[#fafafa]">
-      <div className="">
-        <div className="py-10 flex px-3 sm:px-10 bg-indigo-600 items-center justify-between">
-          <p className="text-3xl text-white">Spaajman</p>
-          <div className="flex text-gray-100">
-            <div className="px-2 ">
-            <a href="#" target="_blank">
-              <FaFacebook className="cursor-pointer text-[25px] duration-150 hover:text-[#e0e0e0]" />
-              </a>
-            </div>
-            <div className="px-2">
-              <a href="#" target="_blank">
-              <FaInstagram className="cursor-pointer text-[25px] duration-150 hover:text-[#e0e0e0]" />
-              </a>
-            </div>
-            <div className="px-2">
-            <a href="#" target="_blank">
-              <FaSquareXTwitter className="cursor-pointer text-[25px] duration-150 hover:text-[#e0e0e0]" />
+    <footer className="bg-gray-50">
+      <div className="container mx-auto px-4 py-10">
+        {/* Top Section */}
+        <div className="flex items-center justify-between py-5 border-b border-gray-200">
+          <p className="text-4xl font-semibold text-indigo-600">Spaajman</p>
+          <div className="flex space-x-4 text-gray-700">
+            <a href="#" target="_blank" aria-label="Facebook">
+              <FaFacebook className="text-2xl hover:text-indigo-600 transition-colors duration-300" />
             </a>
-            </div>
-            <div className="px-2">
-            <a href="#" target="_blank">
-              <FaWhatsapp className="cursor-pointer text-[25px] duration-150 hover:text-[#e0e0e0]" />
+            <a href="#" target="_blank" aria-label="Instagram">
+              <FaInstagram className="text-2xl hover:text-indigo-600 transition-colors duration-300" />
             </a>
-            </div>
+            <a href="#" target="_blank" aria-label="Twitter">
+              <FaTwitter className="text-2xl hover:text-indigo-600 transition-colors duration-300" />
+            </a>
+            <a href="#" target="_blank" aria-label="Whatsapp">
+              <FaWhatsapp className="text-2xl hover:text-indigo-600 transition-colors duration-300" />
+            </a>
           </div>
         </div>
-        <hr className="h-px border-0 bg-gray-200 dark:bg-indigo-600" />
-        <div className="py-16 px-10 bg-[#1d2331] text-white grid gap-16 sm:grid-cols-2 lg:grid-cols-2 lg:gap-10 xl:grid-cols-4">
-          <ul className="flex flex-col">
-            <li className="list-none text-xl">Services</li>
-            <li className="py-3 text-gray-400">
-              Lorem ipsum dolor sit amet.
-            </li>
-            <li className="py-3 text-gray-400">
-              Lorem ipsum dolor sit amet.
-            </li>
-            <li className="py-3 text-gray-400">
-              Lorem ipsum dolor sit amet.
-            </li>
+
+        {/* Footer Content */}
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4 py-10">
+          <ul className="space-y-3">
+            <li className="text-xl font-semibold text-gray-800">Services</li>
+            <li className="text-gray-600">Spa Treatments</li>
+            <li className="text-gray-600">Salon Services</li>
+            <li className="text-gray-600">Massage Therapy</li>
           </ul>
-          <ul className="flex flex-col">
-            <li className="list-none text-xl">Company</li>
-            <li className="py-3 text-gray-400">
-              Lorem ipsum dolor sit amet.
-            </li>
-            <li className="py-3 text-gray-400">
-              Lorem ipsum dolor sit amet.
-            </li>
-            <li className="py-3 text-gray-400">
-              Lorem ipsum dolor sit amet.
-            </li>
+          <ul className="space-y-3">
+            <li className="text-xl font-semibold text-gray-800">Company</li>
+            <li className="text-gray-600">About Us</li>
+            <li className="text-gray-600">Careers</li>
+            <li className="text-gray-600">Press</li>
           </ul>
-          <ul className="flex flex-col">
-            <li className="list-none text-2xl">Helpful Links</li>
-            <li className="py-3 text-gray-400">
-              Lorem ipsum dolor sit amet.
-            </li>
-            <li className="py-3 text-gray-400">
-              Lorem ipsum dolor sit amet.
-            </li>
-            <li className="py-3 text-gray-400">
-              Lorem ipsum dolor sit amet.
-            </li>
+          <ul className="space-y-3">
+            <li className="text-xl font-semibold text-gray-800">Helpful Links</li>
+            <li className="text-gray-600">FAQs</li>
+            <li className="text-gray-600">Privacy Policy</li>
+            <li className="text-gray-600">Terms of Service</li>
           </ul>
-          <ul className="flex flex-col">
-            <li className="list-none text-xl">Contact Info</li>
-            <li className="py-3 text-gray-400">
-            Address
-            </li>
-            <li className="py-3 text-gray-400">
-              Lorem ipsum dolor sit amet.
-            </li>
-            <li className="py-3 text-gray-400">
-              Lorem ipsum dolor sit amet.
-            </li>
+          <ul className="space-y-3">
+            <li className="text-xl font-semibold text-gray-800">Contact Info</li>
+            <li className="text-gray-600">123 Spa Avenue</li>
+            <li className="text-gray-600">City, State, ZIP</li>
+            <li className="text-gray-600">Phone: (123) 456-7890</li>
           </ul>
         </div>
-        <p className="text-white py-5 px-10 bg-[#151c24]">© 2024. Spaajman. All rights reserved.</p>
+
+        {/* Bottom Section */}
+        <p className="text-center text-gray-600 py-5    ">
+          © 2024 Spaajman. All rights reserved.
+        </p>
       </div>
     </footer>
   );
 };
 
-export default Footer ;
+export default Footer;
