@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import './Dashboard.css'
-const Dashbord = () => {
+const Dashboard = () => {
   const [open, setOpen] = useState(false)
   const customers = [
     { name: 'Jane Cooper', company: 'Microsoft', phone: '(225) 555-0118', email: 'jane@microsoft.com', country: 'United States', status: 'Active' },
@@ -122,4 +122,4 @@ const Dashbord = () => {
   )
 }
 
-export default Dashbord
+export default Dashboard

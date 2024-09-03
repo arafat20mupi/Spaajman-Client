@@ -14,6 +14,7 @@ import JobList from '../JobList';
 import JobDetails from '../JobDetails';
 import JobApplicationForm from '../JobApplicationForm';
 import Gallery from '../Gallery';
+import Dashboard from '../Dashboard/Dashboard';
 export const router = createBrowserRouter([
   {
     path: '/',
@@ -53,6 +54,10 @@ export const router = createBrowserRouter([
       {
         path: "/job-search",
         element: <JobList />
+      },
+      {
+        path: "/dashboard",
+        element: <Dashboard />
       },
       {
         path: "/job-details/:id",
