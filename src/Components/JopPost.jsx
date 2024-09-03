@@ -1,11 +1,8 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import {toast} from "react-hot-toast";
+import toast from "react-hot-toast";
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { imageUpload } from '../Utility';
 import useAxiosPublic from "../Hooks/useAxiosPublic";
-// >>>>>>> e6af5271561d08c5a1be80e11b67a0b7f2435886
 
 const UserProfile = () => {
   const axiosCommon = useAxiosPublic()
@@ -53,14 +50,12 @@ const UserProfile = () => {
                 <div className="w-full md:w-auto p-2">
                   <div className="flex flex-wrap justify-between -m-1.5">
                     <div className="w-full md:w-auto p-1.5">
-                    <Link to='/'>
                       <button
                         type="button"
                         className="flex flex-wrap justify-center w-full px-4 py-2 font-medium text-sm text-coolGray-500 hover:text-coolGray-600 border border-coolGray-200 hover:border-coolGray-300 bg-white rounded-md shadow-button"
                       >
                         <p>Cancel</p>
                       </button>
-                      </Link>
                     </div>
                     <div className="w-full md:w-auto p-1.5">
                       <button

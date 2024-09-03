@@ -12,8 +12,10 @@ import image9 from '.././assets/slide-images/9.jpg'
 import image10 from '.././assets/slide-images/10.jpg'
 import image11 from '.././assets/slide-images/11.jpg'
 import image12 from '.././assets/slide-images/12.jpg'
+import { useNavigate } from 'react-router-dom';
 const Slider = () => {
   const scrollRef = useRef(null);
+  const navigate = useNavigate()
 
   const images = [
     {
@@ -61,7 +63,9 @@ const Slider = () => {
   const scrollRight = () => {
     scrollRef.current.scrollBy({ left: 300, behavior: 'smooth' });
   };
-
+  const gallery = () => {
+    navigate('/gallery')
+  }
   return (
     <>
       <div className='mx-5 lg:mx-20 bg-white h-full'>
@@ -89,7 +93,7 @@ const Slider = () => {
         >
           {
             images.map((img, key) => {
-              return <img src={img.img} key={key} className='w-[400px] h-[300px] rounded-md' />
+              return <img onClick={gallery} src={img.img} key={key} className='w-[400px] h-[300px] rounded-md' />
             })
           }
         </div>

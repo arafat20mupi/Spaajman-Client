@@ -1,20 +1,19 @@
-/* eslint-disable react/no-unknown-property */
 import { Link, useLoaderData } from "react-router-dom";
 
 
 const BlogDetails = () => {
   const blog = useLoaderData()
 
-  return (
+  return ( 
     <div className="p-5 pt-24 flex flex-col items-center  mx-auto  text-center">
       <img src={blog.image} alt={blog.title} className="w-fit h-64 object-cover rounded-md mb-4" />
       <div className="mb-4">
-        <p className="text-sm text-gray-500 mb-1">{blog.date} by {blog.author}</p>
+        <p className="text-sm text-gray-500 mb-1">{ blog.date} by {blog.author}</p>
         <h2 className="text-2xl font-semibold">{blog.title}</h2>
       </div>
       <p className="text-gray-700 mb-4">{blog.description}</p>
       <div className="flex gap-2">
-        {blog?.tags.map((tag, index) => (
+        {blog?.tags?.map((tag, index) => (
           <span key={index} className="bg-gray-200 text-gray-600 px-2 py-1 rounded-full text-xs">
             {tag}
           </span>
