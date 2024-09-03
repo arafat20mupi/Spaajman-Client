@@ -14,7 +14,8 @@ import JobList from '../JobList';
 import JobDetails from '../JobDetails';
 import JobApplicationForm from '../JobApplicationForm';
 import Gallery from '../Gallery';
-import Dashboard from '../Dashboard/Dashboard';
+import Dashboard from '../Dashboard/Dashbord';
+
 export const router = createBrowserRouter([
   {
     path: '/',
