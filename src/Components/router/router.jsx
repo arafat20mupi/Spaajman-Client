@@ -14,6 +14,7 @@ import JobList from '../JobList';
 import JobDetails from '../JobDetails';
 import JobApplicationForm from '../JobApplicationForm';
 import Gallery from '../Gallery';
+import Dashboard from '../Dashboard/Dashboard';
 export const router = createBrowserRouter([
   {
     path: '/',
@@ -55,6 +56,10 @@ export const router = createBrowserRouter([
         element: <JobList />
       },
       {
+        path: "/dashboard",
+        element: <Dashboard />
+      },
+      {
         path: "/job-details/:id",
         element: <JobDetails />,
         loader: ({ params }) => fetch(`https://spaajman-server.vercel.app/jobs/${params.id}`)
@@ -68,6 +73,7 @@ export const router = createBrowserRouter([
         path: "/gallery",
         element: <Gallery />
       }
+      
     ],
   },
 ]);
