@@ -68,6 +68,7 @@ export const router = createBrowserRouter([
         path: "/gallery",
         element: <Gallery />
       }
+      
     ],
   },
 ]);
