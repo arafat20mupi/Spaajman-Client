@@ -1,68 +1,59 @@
-
-
 import { useForm } from 'react-hook-form';
 import { useContext, useState } from 'react';
-import gradienBg from "../assets/g.jpeg"
+import gradienBg from "../assets/g.jpeg";
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../Provider/AuthProvider';
 import toast from 'react-hot-toast';
 
-
-
 const Register = () => {
-  const {  createUser } = useContext(AuthContext)
+  const { createUser } = useContext(AuthContext);
   const [labelText, setLabelText] = useState('Full Name *');
   const [placeholderText, setPlaceholderText] = useState('First & Last Name *');
+  const [isShop, setIsShop] = useState(true); // Shop state handle
   const navigate = useNavigate();
+
   const handleSelectChange = (event) => {
     const selectedValue = event.target.value;
     if (selectedValue === 'shop') {
-      setPlaceholderText('Shops First & Last Name')
+      setPlaceholderText('Shop Name');
       setLabelText('Shop Name *');
+      setIsShop(true);  
     } else {
       setLabelText('Full Name *');
-      setPlaceholderText('First & Last Name *')
+      setPlaceholderText('First & Last Name *');
+      setIsShop(false);  
     }
-  }
+  };
+
   const {
+      watch,
     register,
-    watch,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
   const onSubmit = async (data) => {
     const { email, password } = data;
+    console.log('Form Data:', data);
     try {
       const userCredential = await createUser(email, password);
       const user = userCredential.user;
 
-     
-
-      // You can handle additional registration data like `registerAs` and `terms` here
-      // e.g., send to a backend or store in a database
-
       console.log('User created:', user);
       toast.success('User created successfully');
       navigate('/');
-      // Optionally, redirect the user or show further instructions
     } catch (error) {
       console.error("Error creating user:", error);
       toast.error("Error creating user: " + error.message);
     }
   };
 
-
   return (
     <>
-
       <section className="relative bg-white overflow-hidden">
-        <img
-          className="absolute left-0 bottom-0"
-          src={gradienBg}
-          alt=""
-        />
+        <img className="absolute left-0 bottom-0" src={gradienBg} alt="" />
         <div className="relative z-10 flex flex-wrap -m-8">
+          <div className="w-full md:w-1/2 p-8">
           <div className="w-full md:w-1/2 p-8">
             <div className="container px-4 mx-auto">
               <div className="flex flex-wrap">
@@ -125,10 +116,14 @@ const Register = () => {
               </div>
             </div>
           </div>
-          <div className="w-full md:w-1/2 p-8 mt-16 ">
+          </div>
+          <div className="w-full md:w-1/2 p-8 mt-16">
             <div className="p-4 py-16 flex flex-col justify-center bg-[#F1F5F9] h-full">
-              <form className="md:max-w-lg mx-auto" onSubmit={handleSubmit(onSubmit)}
+              <form
+                className="md:max-w-lg mx-auto"
+                onSubmit={handleSubmit(onSubmit)}
               >
+                {/* User Type Selection */}
                 <label className="block mb-4">
                   <p className="mb-2 text-gray-900 font-semibold leading-normal">
                     Register as
@@ -145,6 +140,8 @@ const Register = () => {
                     <p className="text-red-600">This field is required</p>
                   )}
                 </label>
+
+                {/* Common Input Fields */}
                 <label className="block mb-4">
                   <p className="mb-2 text-gray-900 font-semibold leading-normal">
                     {labelText}
@@ -163,7 +160,7 @@ const Register = () => {
                     </p>
                   )}
                 </label>
-                <label className="block mb-4">
+              <label className="block mb-4">
                   <p className="mb-2 text-gray-900 font-semibold leading-normal">
                     Email Address *
                   </p>
@@ -227,6 +224,97 @@ const Register = () => {
                     </p>
                   )}
                 </label>
+                {/* Additional Fields for Shop */}
+                {isShop && (
+                  <>
+                    <label className="block mb-4">
+                      <p className="mb-2 text-gray-900 font-semibold leading-normal">
+                        Location *
+                      </p>
+                      <input
+                        className="px-4 py-3.5 w-full text-gray-400 font-medium placeholder-gray-400 bg-white outline-none border border-gray-300 rounded-lg focus:ring focus:ring-indigo-300"
+                        type="text"
+                        placeholder="Enter Shop Location"
+                        {...register('location', { required: isShop })}
+                      />
+                      {errors.location && (
+                        <p className="text-red-600">This field is required</p>
+                      )}
+                    </label>
+                    <label className="block mb-4">
+                      <p className="mb-2 text-gray-900 font-semibold leading-normal">
+                     Your Shop Name
+                      </p>
+                      <input
+                        className="px-4 py-3.5 w-full text-gray-400 font-medium placeholder-gray-400 bg-white outline-none border border-gray-300 rounded-lg focus:ring focus:ring-indigo-300"
+                        type="text"
+                        placeholder="Enter Shop Name"
+                        {...register('location', { required: isShop })}
+                      />
+                      {errors.location && (
+                        <p className="text-red-600">This field is required</p>
+                      )}
+                    </label>
+                    <label className="block mb-4">
+  <p className="mb-2 text-gray-900 font-semibold leading-normal">
+    Services Provided *
+  </p>
+  <select
+  className="px-4 py-3.5 w-full text-gray-400 font-medium bg-white border border-gray-300 rounded-lg outline-none focus:ring focus:ring-indigo-300"
+  {...register('services', { required: isShop })}
+  defaultValue="" // Set default value here
+>
+  <option value="" disabled>Select a Service</option>
+  <option value="spa">Spa</option>
+  <option value="salon">Salon</option>
+  <option value="massage">Massage</option>
+</select>
+
+  {errors.services && (
+    <p className="mt-2 text-sm text-red-600">This field is required</p>
+  )}
+</label>
+                    <label className="block mb-6">
+  <p className="mb-2 text-gray-900 font-semibold leading-normal">
+    Upload Shop Image *
+  </p>
+  <div className="relative">
+    <input
+      id="shopImage"
+      type="file"
+      className="sr-only"
+      {...register('shopImage', { required: isShop })}
+    />
+    <label
+      htmlFor="shopImage"
+      className="flex items-center justify-center px-4 py-3.5 w-full text-gray-400 font-medium bg-white border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition duration-200 ease-in-out"
+    >
+      <svg
+        className="w-5 h-5 mr-2 text-gray-400"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M3 16l4-4a3 3 0 014 0l4 4m4 0l-4-4a3 3 0 00-4 0l-4 4M21 12h-2m-4 0H3"
+        />
+      </svg>
+      Select an Image
+    </label>
+  </div>
+  {errors.shopImage && (
+    <p className="mt-2 text-sm text-red-600">This field is required</p>
+  )}
+</label>
+                  </>
+                )}
+
+                {/* Terms, Sign Up Button and Link to Login */}
+                {/* ....... */}
                 <div className="flex flex-wrap justify-between mb-4">
                   <div className="w-full">
                     <div className="flex items-center">
@@ -271,9 +359,8 @@ const Register = () => {
           </div>
         </div>
       </section>
-
     </>
-  )
-}
+  );
+};
 
-export default Register
+export default Register;
