@@ -12,8 +12,6 @@ const MapComponent = () => {
   const [selectedShop, setSelectedShop] = useState(null);
 
   const [allShop, loading] = useShop();
-
-console.log(allShop)
   useEffect(() => {
     setFilteredShops(
       allShop.filter((shop) =>

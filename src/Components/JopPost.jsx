@@ -21,7 +21,6 @@ const UserProfile = () => {
 
 
   const onSubmit = async (data) => {
-    console.log(data);
     try {
       const uploadedImageUrl = await imageUpload(data.image);
       const updatedData = { ...data, image: uploadedImageUrl };

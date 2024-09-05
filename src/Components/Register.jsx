@@ -11,7 +11,7 @@ const Register = () => {
   const { createUser } = useContext(AuthContext);
   const [labelText, setLabelText] = useState('Full Name *');
   const [placeholderText, setPlaceholderText] = useState('First & Last Name *');
-  const [isShop, setIsShop] = useState(); // Shop state handle
+  const [isShop, setIsShop] = useState();
   const navigate = useNavigate();
   const axiosCommon = useAxiosPublic()
 
@@ -36,10 +36,10 @@ const Register = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    const { email, password, name, location, services, shopImage, latitude, longitude } = data;
+    const { email, password, name, location, registerAs, services, shopImage, latitude, longitude } = data;
 
     try {
-      const user= await createUser(email, password);
+      const user = await createUser(email, password);
       const img = await imageUpload(shopImage);
       const Data = {
         "name": name,
@@ -54,11 +54,15 @@ const Register = () => {
         "position": [
           parseFloat(latitude),
           parseFloat(longitude)
-        ]
+        ],
+        registerAs,
+        email, 
+        password
       };
 
-      await axiosCommon.post('/shop', Data,user );
-      console.log(Data)
+      await axiosCommon.post('/shop', Data, user);
+     
+     
       toast.success('Shop registered successfully');
       navigate('/');
     } catch (error) {
