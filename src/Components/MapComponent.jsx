@@ -13,7 +13,7 @@ const MapComponent = () => {
 
   const [allShop, loading] = useShop();
 
-
+console.log(allShop)
   useEffect(() => {
     setFilteredShops(
       allShop.filter((shop) =>
@@ -74,10 +74,10 @@ const MapComponent = () => {
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             />
-            {filteredShops.map((shop) => (
+            {filteredShops?.map((shop) => (
               <Marker
                 key={shop._id}
-                position={shop.position}
+                position={shop?.position}
                 eventHandlers={{
                   click: () => handleMarkerClick(shop),
                 }}
@@ -95,6 +95,7 @@ const MapComponent = () => {
                   </div>
                 </Popup>
               </Marker>
+              
             ))}
           </MapContainer>
         </div>

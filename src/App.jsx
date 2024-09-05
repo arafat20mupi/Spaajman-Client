@@ -9,11 +9,11 @@ import Whatsapp from './Components/Whatsapp';
 const App = () => {
   return (
     <div className=''>
-       <Navbar />
+      <Navbar />
       <div className='min-h-[calc(100vh-559.2px)] w-[95%] mx-auto'>
         <Outlet />
       </div>
-      <Whatsapp/>
+      <Whatsapp />
       <Footer />
     </div>
 
