@@ -7,26 +7,26 @@ import toast from 'react-hot-toast';
 import useAxiosPublic from '../Hooks/useAxiosPublic';
 import { imageUpload } from '../Utility';
 
-const Register = () => {
+const ShopRegister = () => {
   const { createUser } = useContext(AuthContext);
-  // const [labelText, setLabelText] = useState('Full Name *');
-  // const [placeholderText, setPlaceholderText] = useState('First & Last Name *');
-  // const [isShop, setIsShop] = useState();
+  const [labelText, setLabelText] = useState('Full Name *');
+  const [placeholderText, setPlaceholderText] = useState('First & Last Name *');
+  const [isShop, setIsShop] = useState();
   const navigate = useNavigate();
   const axiosCommon = useAxiosPublic()
 
-  // const handleSelectChange = (event) => {
-  //   const selectedValue = event.target.value;
-  //   if (selectedValue === 'shop') {
-  //     setPlaceholderText('Shop Name');
-  //     setLabelText('Shop Name *');
-  //     setIsShop(true);
-  //   } else {
-  //     setLabelText('Full Name *');
-  //     setPlaceholderText('First & Last Name *');
-  //     setIsShop(false);
-  //   }
-  // };
+  const handleSelectChange = (event) => {
+    const selectedValue = event.target.value;
+    if (selectedValue === 'shop') {
+      setPlaceholderText('Shop Name');
+      setLabelText('Shop Name *');
+      setIsShop(true);
+    } else {
+      setLabelText('Full Name *');
+      setPlaceholderText('First & Last Name *');
+      setIsShop(false);
+    }
+  };
 
   const {
     watch,
@@ -150,17 +150,10 @@ const Register = () => {
               >
                 {/* User Type Selection */}
                 <label className="block mb-4">
-                  <Link to="/register/shop" className="mb-2    text-indigo-700 font-semibold leading-normal">
-                      register as Shop ?
+                  <Link to="/register"  className="mb-2    text-indigo-700 font-semibold leading-normal">
+                       register as user?
                   </Link>
-                  {/* <select
-                    className="px-4 py-3.5 w-full text-gray-400 font-medium placeholder-gray-400 bg-white outline-none border border-gray-300 rounded-lg focus:ring focus:ring-indigo-300"
-                    // onClick={handleSelectChange}
-                    {...register('registerAs', { required: true })}
-                  >
-                    <option value="user">User</option>
-                    <option value="shop">Shop</option>
-                  </select> */}
+                  
                   {errors.registerAs && (
                     <p className="text-red-600">This field is required</p>
                   )}
@@ -169,13 +162,12 @@ const Register = () => {
                 {/* Common Input Fields */}
                 <label className="block mb-4">
                   <p className="mb-2 text-gray-900 font-semibold leading-normal">
-                          Your Name
+                    {labelText}
                   </p>
                   <input
                     className="px-4 py-3.5 w-full text-gray-400 font-medium placeholder-gray-400 bg-white outline-none border border-gray-300 rounded-lg focus:ring focus:ring-indigo-300"
                     type="text"
-                    placeholder='Your name '
-                    // placeholder={placeholderText}
+                    placeholder={placeholderText}
                     {...register('name', { required: true, minLength: 2 })}
                   />
                   {errors.name && (
@@ -251,7 +243,115 @@ const Register = () => {
                   )}
                 </label>
                 {/* Additional Fields for Shop */}
-                
+             
+                  <>
+                    <label className="block mb-4">
+                      <p className="mb-2 text-gray-900 font-semibold leading-normal">
+                        Location *
+                      </p>
+                      <input
+                        className="px-4 py-3.5 w-full text-gray-400 font-medium placeholder-gray-400 bg-white outline-none border border-gray-300 rounded-lg focus:ring focus:ring-indigo-300"
+                        type="text"
+                        placeholder="Enter Shop Location"
+                        {...register('location', { required: isShop })}
+                      />
+                      {errors.location && (
+                        <p className="text-red-600">This field is required</p>
+                      )}
+                    </label>
+
+
+                    {/* position Fi */}
+                    <label className="block mb-4">
+                      <p className="mb-2 text-gray-900 font-semibold leading-normal">
+                        Position
+                      </p>
+
+                      <input
+                        className="px-4 py-3.5 w-full text-gray-400 font-medium placeholder-gray-400 bg-white outline-none border border-gray-300 rounded-lg focus:ring focus:ring-indigo-300"
+                        type="text"
+                        {...register('latitude')}
+                        placeholder="latitude" />
+                      <input
+                        className="px-4 mt-2 py-3.5 w-full text-gray-400 font-medium placeholder-gray-400 bg-white outline-none border border-gray-300 rounded-lg focus:ring focus:ring-indigo-300"
+                        type="text"
+                        {...register('longitude')}
+                        placeholder="Longitude" />
+                      {errors.location && (
+                        <p className="text-red-600">This field is required</p>
+                      )}
+                    </label>
+                    <label className="block mb-4">
+                      <p className="mb-2 text-gray-900 font-semibold leading-normal">
+                        Your Shop Name
+                      </p>
+                      <input
+                        className="px-4 py-3.5 w-full text-gray-400 font-medium placeholder-gray-400 bg-white outline-none border border-gray-300 rounded-lg focus:ring focus:ring-indigo-300"
+                        type="text"
+                        placeholder="Enter Shop Name"
+                        {...register('location', { required: isShop })}
+                      />
+                      {errors.location && (
+                        <p className="text-red-600">This field is required</p>
+                      )}
+                    </label>
+                    <label className="block mb-4">
+                      <p className="mb-2 text-gray-900 font-semibold leading-normal">
+                        Services Provided *
+                      </p>
+                      <select
+                        className="px-4 py-3.5 w-full text-gray-400 font-medium bg-white border border-gray-300 rounded-lg outline-none focus:ring focus:ring-indigo-300"
+                        {...register('services', { required: isShop })}
+                        defaultValue="" // Set default value here
+                      >
+                        <option value="" disabled>Select a Service</option>
+                        <option value="spa">Spa</option>
+                        <option value="salon">Salon</option>
+                        <option value="massage">Massage</option>
+                      </select>
+
+                      {errors.services && (
+                        <p className="mt-2 text-sm text-red-600">This field is required</p>
+                      )}
+                    </label>
+                    <label className="block mb-6">
+                      <p className="mb-2 text-gray-900 font-semibold leading-normal">
+                        Upload Shop Image *
+                      </p>
+                      <div className="relative">
+                        <input
+                          id="shopImage"
+                          type="file"
+                          className="sr-only"
+                          {...register('shopImage', { required: isShop })}
+                        />
+                        <label
+                          htmlFor="shopImage"
+                          className="flex items-center justify-center px-4 py-3.5 w-full text-gray-400 font-medium bg-white border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition duration-200 ease-in-out"
+                        >
+                          <svg
+                            className="w-5 h-5 mr-2 text-gray-400"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M3 16l4-4a3 3 0 014 0l4 4m4 0l-4-4a3 3 0 00-4 0l-4 4M21 12h-2m-4 0H3"
+                            />
+                          </svg>
+                          Select an Image
+                        </label>
+                      </div>
+                      {errors.shopImage && (
+                        <p className="mt-2 text-sm text-red-600">This field is required</p>
+                      )}
+                    </label>
+                  </>
+         
                 {/* Terms, Sign Up Button and Link to Login */}
                 {/* ....... */}
                 <div className="flex flex-wrap justify-between mb-4">
@@ -302,4 +402,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default  ShopRegister;

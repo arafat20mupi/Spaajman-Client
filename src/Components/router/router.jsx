@@ -15,6 +15,7 @@ import JobDetails from '../JobDetails';
 import JobApplicationForm from '../JobApplicationForm';
 import Gallery from '../Gallery';
 import Dashboard from '../Dashboard/Dashbord';
+import ShopRegister from '../ShopRegister';
 
 export const router = createBrowserRouter([
   {
@@ -74,7 +75,11 @@ export const router = createBrowserRouter([
         path: "/gallery",
         element: <Gallery />
       }
-      
+      ,
+      {
+        path: "/register/shop",
+        element: <ShopRegister/>
+      }
     ],
   },
 ]);
