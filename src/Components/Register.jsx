@@ -15,29 +15,18 @@ const Register = () => {
   const onSubmit = data => {
     const { name, email, password, photo } = data;
 
-    // Password validation
-    const uppercaseRegex = /[A-Z]/;
-    const lowercaseRegex = /[a-z]/;
-
-    if (!uppercaseRegex.test(password)) {
-      toast.error('Password should contain at least one uppercase letter!');
-      return;
-    }
+    
     if (password.length < 6) {
       toast.error('Password should contain at least six letters!');
       return;
     }
-    if (!lowercaseRegex.test(password)) {
-      toast.error('Password should contain at least one lowercase letter!');
-      return;
-    }
-
+    
     // Create user and update profile
     createUser(email, password)
       .then(() => {
         updateprofile(name, photo)
           .then(() => {
-            const userInfo = { name, email };
+            const userInfo = { name, email,password };
             axiosPublic.post('/users', userInfo)
               .then(res => {
                 if (res.data.insertedId) {

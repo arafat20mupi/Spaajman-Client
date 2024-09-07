@@ -1,4 +1,4 @@
-import  { useState, useContext } from 'react';
+import { useState, useContext } from 'react';
 import { FaHome, FaImage, FaSuitcase, FaBlogger } from 'react-icons/fa';
 import { IoMdAdd } from 'react-icons/io';
 import { Link } from 'react-router-dom';
@@ -32,7 +32,7 @@ const Navbar = () => {
             isMenuOpen ?
 
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#4438c9" fill="none">
-                <path d="M19.0005 4.99988L5.00049 18.9999M5.00049 4.99988L19.0005 18.9999" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M19.0005 4.99988L5.00049 18.9999M5.00049 4.99988L19.0005 18.9999" stroke="currentColor" strokeWidth="1.5"  strokeLinejoin="round" />
               </svg>
               :
               <svg
@@ -70,7 +70,6 @@ const Navbar = () => {
               Gallery
             </li>
           </Link>
-
           <Link to='/blog'>
             <li className="flex items-center text-gray-800 font-medium hover:text-indigo-600 cursor-pointer transition duration-300">
               <FaBlogger className="mr-2" />
@@ -85,13 +84,16 @@ const Navbar = () => {
               <FaSuitcase className="mr-2" />
               Find a Job
             </button>
-          </Link>
-          <Link to="/post-job">
-            <button className="bg-indigo-600 text-white px-5 py-2 w-32 rounded-lg shadow-lg hover:bg-indigo-700 transition duration-300 flex items-center justify-center text-center">
-              Post Job
-            </button>
-          </Link>
-
+          </Link>    
+          {
+            user ? (
+              <Link to="/dashboard">
+                <button className="bg-indigo-600 text-white px-5 py-2  rounded-lg shadow-lg hover:bg-indigo-700 transition duration-300 flex items-center justify-center text-center">
+                 Deshboard
+                </button>
+              </Link>
+            ) : ''
+          }
           {user ? (
             <button onClick={handleLogOut} className="border-2 border-indigo-600 text-indigo-600 px-5 py-2 w-32 rounded-lg shadow-lg hover:bg-indigo-50 transition duration-300 flex items-center justify-center text-center">
               LogOut
@@ -100,7 +102,7 @@ const Navbar = () => {
             <Link to="/register">
               <button className="border-2 border-indigo-600 text-indigo-600 px-5 py-2 w-25 rounded-lg shadow-lg hover:bg-indigo-50 transition duration-300 flex items-center justify-center text-center">
                 <IoMdAdd className="mr-2" />
-                Create a Shop
+                Create a Account
               </button>
             </Link>
           )}

@@ -14,6 +14,9 @@ const App = () => {
         <Outlet />
       </div>
       <Whatsapp />
+      {
+      
+      }
       <Footer />
     </div>
 

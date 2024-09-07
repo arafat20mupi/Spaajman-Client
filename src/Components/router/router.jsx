@@ -16,6 +16,8 @@ import JobApplicationForm from '../JobApplicationForm';
 import Gallery from '../Gallery';
 import Dashboard from '../Dashboard/Dashbord';
 import ShopRegister from '../ShopRegister';
+import DeshboardCard from '../Dashboard/DeshboardCard';
+import PrivateRouter from './PrivateRouter';
 
 export const router = createBrowserRouter([
   {
@@ -47,19 +49,11 @@ export const router = createBrowserRouter([
         path: "/blog/:id",
         element: <BlogDetails />,
         loader: ({ params }) => fetch(`https://spaajman-server.vercel.app/blogs/${params.id}`)
-      },
-      {
-        path: "/post-job",
-        element: <UserProfile />
       }
       ,
       {
         path: "/job-search",
         element: <JobList />
-      },
-      {
-        path: "/dashboard",
-        element: <Dashboard />
       },
       {
         path: "/job-details/:id",
@@ -74,12 +68,33 @@ export const router = createBrowserRouter([
       {
         path: "/gallery",
         element: <Gallery />
-      }
-      ,
+      },
       {
-        path: "/register/shop",
-        element: <ShopRegister/>
-      }
+        path: "/dashboard",
+        element: <PrivateRouter><Dashboard /></PrivateRouter>,
+        children: [
+
+          {
+            path: "registerShop",
+            element: <ShopRegister />
+          },
+          {
+            path: "post-job",
+            element: <UserProfile />
+          },
+          {
+            path: 'Customer',
+            element: <DeshboardCard></DeshboardCard>
+          },
+          {
+            path: 'Orders',
+            element: <DeshboardCard></DeshboardCard>
+          }
+
+        ]
+      },
+
+
     ],
   },
 ]);
