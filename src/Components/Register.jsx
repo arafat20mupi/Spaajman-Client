@@ -1,77 +1,66 @@
 import { useForm } from 'react-hook-form';
-import { useContext, useState } from 'react';
-import gradienBg from "../assets/g.jpeg";
+import gradienBg from '../assets/g.jpeg';
 import { Link, useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
 import { AuthContext } from '../Provider/AuthProvider';
-import toast from 'react-hot-toast';
 import useAxiosPublic from '../Hooks/useAxiosPublic';
-import { imageUpload } from '../Utility';
+import toast from 'react-hot-toast';
 
 const Register = () => {
-  const { createUser } = useContext(AuthContext);
-  // const [labelText, setLabelText] = useState('Full Name *');
-  // const [placeholderText, setPlaceholderText] = useState('First & Last Name *');
-  // const [isShop, setIsShop] = useState();
+  const { createUser, updateprofile } = useContext(AuthContext);
+  const axiosPublic = useAxiosPublic();
+  const { register, handleSubmit, watch, reset, formState: { errors } } = useForm();
   const navigate = useNavigate();
-  const axiosCommon = useAxiosPublic()
 
-  // const handleSelectChange = (event) => {
-  //   const selectedValue = event.target.value;
-  //   if (selectedValue === 'shop') {
-  //     setPlaceholderText('Shop Name');
-  //     setLabelText('Shop Name *');
-  //     setIsShop(true);
-  //   } else {
-  //     setLabelText('Full Name *');
-  //     setPlaceholderText('First & Last Name *');
-  //     setIsShop(false);
-  //   }
-  // };
+  const onSubmit = data => {
+    const { name, email, password, photo } = data;
 
-  const {
-    watch,
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+    // Password validation
+    const uppercaseRegex = /[A-Z]/;
+    const lowercaseRegex = /[a-z]/;
 
-  const onSubmit = async (data) => {
-    const { email, password, name, location, registerAs, services, shopImage, latitude, longitude } = data;
-
-    try {
-      const user = await createUser(email, password);
-      const img = await imageUpload(shopImage);
-      const Data = {
-        "name": name,
-        "location": location,
-        "services": [
-          {
-            "name": services,
-            "rating": 0
-          }
-        ],
-        "img": img,
-        "position": [
-          parseFloat(latitude),
-          parseFloat(longitude)
-        ],
-        registerAs,
-        email, 
-        password
-      };
-
-      await axiosCommon.post('/shop', Data, user);
-     
-     
-      toast.success('Shop registered successfully');
-      navigate('/');
-    } catch (error) {
-      console.error("Error registering shop:", error);
-      toast.error("Error registering shop: " + error.message);
+    if (!uppercaseRegex.test(password)) {
+      toast.error('Password should contain at least one uppercase letter!');
+      return;
     }
+    if (password.length < 6) {
+      toast.error('Password should contain at least six letters!');
+      return;
+    }
+    if (!lowercaseRegex.test(password)) {
+      toast.error('Password should contain at least one lowercase letter!');
+      return;
+    }
+
+    // Create user and update profile
+    createUser(email, password)
+      .then(() => {
+        updateprofile(name, photo)
+          .then(() => {
+            const userInfo = { name, email };
+            axiosPublic.post('/users', userInfo)
+              .then(res => {
+                if (res.data.insertedId) {
+                  toast.success('Registered successfully!');
+                  // Navigate to the home page or previous location
+                  navigate('/');
+                } else {
+                  toast.error('Registration failed, email might already exist!');
+                  reset();
+                }
+              })
+              .catch(() => {
+                toast.error('Error occurred while registering.');
+              });
+          })
+          .catch(() => {
+            toast.error('Error updating profile.');
+          });
+      })
+      .catch(() => {
+        toast.error('Error creating user.');
+      });
   };
-
-
 
   return (
     <>
@@ -79,126 +68,66 @@ const Register = () => {
         <img className="absolute left-0 bottom-0" src={gradienBg} alt="" />
         <div className="relative z-10 flex flex-wrap -m-8">
           <div className="w-full md:w-1/2 p-8">
-            <div className="w-full md:w-1/2 p-8">
-              <div className="container px-4 mx-auto">
-                <div className="flex flex-wrap">
-                  <div className="w-full">
-                    <div className="md:max-w-lg mx-auto pt-16 md:pb-32">
-                      <a className="mb-28 inline-block" href="#">
-                        <img src="" alt="" />
-                      </a>
-                      <h2 className="mb-32 text-6xl md:text-7xl font-bold font-heading tracking-px-n leading-tight">
-                        Create an account &amp; get started.
-                      </h2>
-                      <h3 className="mb-9 text-xl font-bold font-heading leading-normal">
-                        Why should you join us?
-                      </h3>
-                      <ul className="md:max-w-xs">
-                        <li className="mb-5 flex flex-wrap">
-                          <svg
-                            className="mr-2"
-                            width={25}
-                            height={26}
-                            viewBox="0 0 25 26"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              clipRule="evenodd"
-                              d="M12.5 23C18.0228 23 22.5 18.5228 22.5 13C22.5 7.47715 18.0228 3 12.5 3C6.97715 3 2.5 7.47715 2.5 13C2.5 18.5228 6.97715 23 12.5 23ZM17.1339 11.3839C17.622 10.8957 17.622 10.1043 17.1339 9.61612C16.6457 9.12796 15.8543 9.12796 15.3661 9.61612L11.25 13.7322L9.63388 12.1161C9.14573 11.628 8.35427 11.628 7.86612 12.1161C7.37796 12.6043 7.37796 13.3957 7.86612 13.8839L10.3661 16.3839C10.8543 16.872 11.6457 16.872 12.1339 16.3839L17.1339 11.3839Z"
-                              fill="#4F46E5"
-                            />
-                          </svg>
-                          <span className="flex-1 font-medium leading-relaxed">
-                            The best you can do in no time at all, amazing feature goes
-                            here
-                          </span>
-                        </li>
-                        <li className="mb-5 flex flex-wrap">
-                          <svg
-                            className="mr-2"
-                            width={25}
-                            height={26}
-                            viewBox="0 0 25 26"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              clipRule="evenodd"
-                              d="M12.5 23C18.0228 23 22.5 18.5228 22.5 13C22.5 7.47715 18.0228 3 12.5 3C6.97715 3 2.5 7.47715 2.5 13C2.5 18.5228 6.97715 23 12.5 23ZM17.1339 11.3839C17.622 10.8957 17.622 10.1043 17.1339 9.61612C16.6457 9.12796 15.8543 9.12796 15.3661 9.61612L11.25 13.7322L9.63388 12.1161C9.14573 11.628 8.35427 11.628 7.86612 12.1161C7.37796 12.6043 7.37796 13.3957 7.86612 13.8839L10.3661 16.3839C10.8543 16.872 11.6457 16.872 12.1339 16.3839L17.1339 11.3839Z"
-                              fill="#4F46E5"
-                            />
-                          </svg>
-                          <span className="flex-1 font-medium leading-relaxed">
-                            24/7 Support of our dedicated, highly professional team
-                          </span>
-                        </li>
-                      </ul>
-                    </div>
+            {/* Left side content */}
+            <div className="container px-4 mx-auto">
+              <div className="flex flex-wrap">
+                <div className="w-full">
+                  <div className="md:max-w-lg mx-auto pt-16 md:pb-32">
+                    <h2 className="mb-32 text-6xl md:text-7xl font-bold font-heading">
+                      Create an account &amp; get started.
+                    </h2>
+                    <h3 className="mb-9 text-xl font-bold font-heading">
+                      Why should you join us?
+                    </h3>
+                    <ul className="md:max-w-xs">
+                      <li className="mb-5 flex flex-wrap">
+                        <span className="flex-1 font-medium">
+                          Amazing features to help you grow
+                        </span>
+                      </li>
+                      <li className="mb-5 flex flex-wrap">
+                        <span className="flex-1 font-medium">
+                          24/7 Support from our dedicated team
+                        </span>
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+
+          {/* Registration Form */}
           <div className="w-full md:w-1/2 p-8 mt-16">
             <div className="p-4 py-16 flex flex-col justify-center bg-[#F1F5F9] h-full">
-              <form
-                className="md:max-w-lg mx-auto"
-                onSubmit={handleSubmit(onSubmit)}
-              >
-                {/* User Type Selection */}
+              <form className="md:max-w-lg mx-auto" onSubmit={handleSubmit(onSubmit)}>
+                {/* Name */}
                 <label className="block mb-4">
-                  <Link to="/register/shop" className="mb-2    text-indigo-700 font-semibold leading-normal">
-                      register as Shop ?
-                  </Link>
-                  {/* <select
-                    className="px-4 py-3.5 w-full text-gray-400 font-medium placeholder-gray-400 bg-white outline-none border border-gray-300 rounded-lg focus:ring focus:ring-indigo-300"
-                    // onClick={handleSelectChange}
-                    {...register('registerAs', { required: true })}
-                  >
-                    <option value="user">User</option>
-                    <option value="shop">Shop</option>
-                  </select> */}
-                  {errors.registerAs && (
-                    <p className="text-red-600">This field is required</p>
-                  )}
-                </label>
-
-                {/* Common Input Fields */}
-                <label className="block mb-4">
-                  <p className="mb-2 text-gray-900 font-semibold leading-normal">
-                          Your Name
-                  </p>
+                  <p className="mb-2 text-gray-900 font-semibold">Your Name</p>
                   <input
-                    className="px-4 py-3.5 w-full text-gray-400 font-medium placeholder-gray-400 bg-white outline-none border border-gray-300 rounded-lg focus:ring focus:ring-indigo-300"
+                    className="px-4 py-3.5 w-full text-gray-400 font-medium placeholder-gray-400 bg-white outline-none border border-gray-300 rounded-lg"
                     type="text"
-                    placeholder='Your name '
-                    // placeholder={placeholderText}
+                    placeholder="Your name"
                     {...register('name', { required: true, minLength: 2 })}
                   />
                   {errors.name && (
                     <p className="text-red-600">
-                      {errors.name.type === 'required'
-                        ? 'This field is required'
-                        : 'Name must be at least 2 characters'}
+                      {errors.name.type === 'required' ? 'This field is required' : 'Name must be at least 2 characters'}
                     </p>
                   )}
                 </label>
+
+                {/* Email */}
                 <label className="block mb-4">
-                  <p className="mb-2 text-gray-900 font-semibold leading-normal">
-                    Email Address *
-                  </p>
+                  <p className="mb-2 text-gray-900 font-semibold">Email Address *</p>
                   <input
-                    className="px-4 py-3.5 w-full text-gray-400 font-medium placeholder-gray-400 bg-white outline-none border border-gray-300 rounded-lg focus:ring focus:ring-indigo-300"
+                    className="px-4 py-3.5 w-full text-gray-400 font-medium placeholder-gray-400 bg-white outline-none border border-gray-300 rounded-lg"
                     type="email"
                     placeholder="Enter email address"
                     {...register('email', {
                       required: 'This field is required',
                       pattern: {
-                        value:
-                          /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+                        value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
                         message: 'Please enter a valid email address',
                       },
                     })}
@@ -207,91 +136,67 @@ const Register = () => {
                     <p className="text-red-600">{errors.email.message}</p>
                   )}
                 </label>
+
+                {/* Password */}
                 <label className="block mb-5">
-                  <p className="mb-2 text-gray-900 font-semibold leading-normal">
-                    Password *
-                  </p>
+                  <p className="mb-2 text-gray-900 font-semibold">Password *</p>
                   <input
-                    className="px-4 py-3.5 w-full text-gray-400 font-medium placeholder-gray-400 bg-white outline-none border border-gray-300 rounded-lg focus:ring focus:ring-indigo-300"
+                    className="px-4 py-3.5 w-full text-gray-400 font-medium placeholder-gray-400 bg-white outline-none border border-gray-300 rounded-lg"
                     type="password"
                     placeholder="******"
                     {...register('password', {
                       required: 'This field is required',
-                      minLength: {
-                        value: 6,
-                        message: 'Password must be at least 6 characters',
-                      },
+                      minLength: { value: 6, message: 'Password must be at least 6 characters' },
                     })}
                   />
                   {errors.password && (
                     <p className="text-red-600">{errors.password.message}</p>
                   )}
                 </label>
+
+                {/* Confirm Password */}
                 <label className="block mb-5">
-                  <p className="mb-2 text-gray-900 font-semibold leading-normal">
-                    Confirm Password *
-                  </p>
+                  <p className="mb-2 text-gray-900 font-semibold">Confirm Password *</p>
                   <input
-                    className="px-4 py-3.5 w-full text-gray-400 font-medium placeholder-gray-400 bg-white outline-none border border-gray-300 rounded-lg focus:ring focus:ring-indigo-300"
+                    className="px-4 py-3.5 w-full text-gray-400 font-medium placeholder-gray-400 bg-white outline-none border border-gray-300 rounded-lg"
                     type="password"
                     placeholder="******"
                     {...register('confirmPassword', {
                       required: 'Confirm Password is required',
-                      validate: (value) => {
-                        const password = watch('password'); // Ensure watch is called inside validate
-                        return value === password || 'Passwords do not match';
-                      },
+                      validate: (value) => value === watch('password') || 'Passwords do not match',
                     })}
-
                   />
                   {errors.confirmPassword && (
-                    <p className="text-red-600">
-                      {errors.confirmPassword.message}
-                    </p>
+                    <p className="text-red-600">{errors.confirmPassword.message}</p>
                   )}
                 </label>
-                {/* Additional Fields for Shop */}
-                
-                {/* Terms, Sign Up Button and Link to Login */}
-                {/* ....... */}
-                <div className="flex flex-wrap justify-between mb-4">
-                  <div className="w-full">
-                    <div className="flex items-center">
-                      <input
-                        className="w-4 h-4"
-                        id="default-checkbox"
-                        type="checkbox"
-                        {...register('terms', { required: true })}
-                      />
-                      <label
-                        className="ml-2 text-sm text-gray-900 font-medium"
-                        htmlFor="default-checkbox"
-                      >
-                        <span>By signing up, I agree to the</span>
-                        <Link to="/terms" className="text-indigo-600">
-                          Terms and Conditions
-                        </Link>
-                        <span> of SpaAjman</span>
-                      </label>
-                    </div>
-                  </div>
+
+                {/* Terms */}
+                <div className="flex items-center mb-4">
+                  <input
+                    className="w-4 h-4"
+                    id="terms"
+                    type="checkbox"
+                    {...register('terms', { required: true })}
+                  />
+                  <label className="ml-2 text-sm text-gray-900 font-medium" htmlFor="terms">
+                    I agree to the <Link to="/terms" className="text-indigo-600">Terms and Conditions</Link>
+                  </label>
                 </div>
-                {errors.terms && (
-                  <p className="text-red-600 ml-2">
-                    You must agree to the terms
-                  </p>
-                )}
+                {errors.terms && <p className="text-red-600">You must agree to the terms</p>}
+
+                {/* Submit */}
                 <button
-                  className="mb-8 py-4 px-9 w-full text-white font-semibold border border-indigo-700 rounded-xl shadow-4xl focus:ring focus:ring-indigo-300 bg-indigo-600 hover:bg-indigo-700 transition ease-in-out duration-200"
+                  className="mb-8 py-4 px-9 w-full text-white font-semibold bg-indigo-600 rounded-xl shadow-lg hover:bg-indigo-700 transition"
                   type="submit"
                 >
                   Sign Up
                 </button>
+
+                {/* Redirect */}
                 <p className="text-center">
                   Already Have an Account?{' '}
-                  <Link to="/login" className="text-indigo-600">
-                    Log In
-                  </Link>
+                  <Link to="/login" className="text-indigo-600">Log In</Link>
                 </p>
               </form>
             </div>
