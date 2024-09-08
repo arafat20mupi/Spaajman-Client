@@ -5,7 +5,7 @@ import Loading from './Loading/Loading';
 
 const JobList = () => {
   const [selectedTags, setSelectedTags] = useState([]);
-  const [jobs, loading] = useJobs()
+  const [jobs, loading] = useJobs();
 
   if (loading) return <Loading />
 
