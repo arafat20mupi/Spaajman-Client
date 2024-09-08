@@ -93,7 +93,7 @@ const Slider = () => {
         >
           {
             images.map((img, key) => {
-              return <img onClick={gallery} src={img.img} key={key} className='w-[400px] h-[300px] rounded-md' />
+              return <img onClick={gallery} src={img.img} key={key} className='w-[400px] h-[300px] rounded-md cursor-pointer' />
             })
           }
         </div>

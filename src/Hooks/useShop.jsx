@@ -5,7 +5,7 @@ import useAxiosPublic from "./useAxiosPublic";
 const useShop = () => {
     const axiosPublic = useAxiosPublic();
     const { data: allShop = [], isPending: loading, refetch } = useQuery({
-        queryKey: 'allClass',
+        queryKey: 'allShop',
         queryFn: async () => {
             const res = await axiosPublic.get('/shop');
             return res.data;

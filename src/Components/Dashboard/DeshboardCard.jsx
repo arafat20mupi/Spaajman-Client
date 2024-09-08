@@ -3,9 +3,12 @@ import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import { useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import Swal from 'sweetalert2'
+import useShop from "../../Hooks/useShop";
+import { NavLink } from "react-router-dom";
 
 const DeshboardCard = () => {
     const axiosSecure = useAxiosPrivate();
+    const [allShop] = useShop();
     const { data: users = [], refetch } = useQuery({
         queryKey: 'users',
         queryFn: async () => {
@@ -52,6 +55,7 @@ const DeshboardCard = () => {
         });
     };
 
+    const shopData = allShop.filter(shop => shop.status === 'pending');
 
     return (
         <div>
@@ -61,16 +65,18 @@ const DeshboardCard = () => {
                         <h3 className="text-lg font-semibold">Total Customers</h3>
                         <p className="text-2xl mt-2">{users.length}</p>
                     </div>
-                    <div className="bg-white p-6 rounded-lg shadow-md">
-                        <h3 className="text-lg font-semibold">Members</h3>
-                        <p className="text-2xl mt-2">1,893</p>
-                        <p className="text-gray-500">+200 this month</p>
-                    </div>
-                    <div className="bg-white p-6 rounded-lg shadow-md">
-                        <h3 className="text-lg font-semibold">Active Now</h3>
-                        <p className="text-2xl mt-2">189</p>
-                        <p className="text-gray-500">+15 this month</p>
-                    </div>
+                    <NavLink to={'/dashboard/all-shop'}>
+                        <div className="bg-white p-6 rounded-lg shadow-md">
+                            <h3 className="text-lg font-semibold">Total Shop</h3>
+                            <p className="text-2xl mt-2">{allShop.length}</p>
+                        </div>
+                    </NavLink>
+                    <NavLink to={'/dashboard/shop-request-admin'}>
+                        <div className="bg-white p-6 rounded-lg shadow-md">
+                            <h3 className="text-lg font-semibold">Pending Shop</h3>
+                            <p className="text-2xl mt-2">{shopData.length}</p>
+                        </div>
+                    </NavLink>
                 </div>
             </div>
             <div className="bg-white lg:w-auto p-6 rounded-lg shadow-md">

@@ -48,6 +48,13 @@ const Dashboard = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/dashboard/all-shop">
+                  <button className="bg-indigo-600 text-white px-4 py-2 w-full text-left rounded-lg shadow-lg hover:bg-indigo-700 transition duration-300 flex items-center">
+                    All Shop
+                  </button>
+                </Link>
+              </li>
+              <li>
                 <Link to="/dashboard/shop-request-admin">
                   <button className="bg-indigo-600 text-white px-4 py-2 w-full text-left rounded-lg shadow-lg hover:bg-indigo-700 transition duration-300 flex items-center">
                     Shop Application

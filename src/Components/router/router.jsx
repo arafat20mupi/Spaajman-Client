@@ -21,6 +21,7 @@ import PrivateRouter from './PrivateRouter';
 import ShopRequestAdmin from '../Dashboard/ShopRequestAdmin';
 import Error from '../Error';
 import Profile from '../Dashboard/Profile';
+import AllShopAdmin from '../Dashboard/AllShopAdmin';
 
 export const router = createBrowserRouter([
   {
@@ -73,16 +74,16 @@ export const router = createBrowserRouter([
         path: "/gallery",
         element: <Gallery />
       },
-      
+
 
 
     ],
-  },{
+  }, {
     path: "/dashboard",
     element: <PrivateRouter><Dashboard /></PrivateRouter>,
     errorElement: <Error />,
     children: [
-
+      // user routes
       {
         path: "registerShop",
         element: <ShopRegister />
@@ -91,10 +92,16 @@ export const router = createBrowserRouter([
         path: 'profile',
         element: <Profile />
       },
+      // shop register routes
       {
         path: "post-job",
         element: <UserProfile />
       },
+      {
+        path: 'Orders',
+        element: <DeshboardCard></DeshboardCard>
+      },
+      // admin routes
       {
         path: 'Customer',
         element: <DeshboardCard></DeshboardCard>
@@ -104,8 +111,8 @@ export const router = createBrowserRouter([
         element: <ShopRequestAdmin />
       },
       {
-        path: 'Orders',
-        element: <DeshboardCard></DeshboardCard>
+        path: 'all-shop',
+        element: <AllShopAdmin />
       }
 
     ]
