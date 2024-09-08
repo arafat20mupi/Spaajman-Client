@@ -4,14 +4,14 @@ import useAxiosPublic from "./useAxiosPublic";
 
 const useShop = () => {
     const axiosPublic = useAxiosPublic();
-    const { data: allShop = [], isPending: loading } = useQuery({
+    const { data: allShop = [], isPending: loading, refetch } = useQuery({
         queryKey: 'allClass',
         queryFn: async () => {
             const res = await axiosPublic.get('/shop');
             return res.data;
         }
     });
-    return [allShop, loading];
+    return [allShop, loading, refetch];
 };
 
 export default useShop;

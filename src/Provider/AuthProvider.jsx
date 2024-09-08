@@ -21,7 +21,7 @@ const AuthProvider = ({ children }) => {
             setLoading(false);
             return;
 
-        } catch (error) {
+        } catch {
             setLoading(false);
             return;
         }
@@ -59,7 +59,7 @@ const AuthProvider = ({ children }) => {
         return signInWithPopup(auth, gitProvider);
     }
 
-    
+
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser)

@@ -17,7 +17,7 @@ const JobList = () => {
 
   const filteredJobs = selectedTags.length === 0
     ? jobs
-    : jobs.filter(job => job.tags.includes(selectedTags[0]));
+    : jobs?.filter(job => job.tags.includes(selectedTags[0]));
 
   return (
     <div className="p-16 pt-24">
@@ -45,7 +45,7 @@ const JobList = () => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredJobs.map((job) => (
+        {filteredJobs?.map((job) => (
           <div key={job._id} className="border border-gray-300 p-6 rounded-lg shadow-lg bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out">
             <h2 className="text-2xl font-semibold mb-2 text-gray-800">{job.title}</h2>
             <p className="text-gray-600 mb-1 text-sm font-medium">{job.location}</p>

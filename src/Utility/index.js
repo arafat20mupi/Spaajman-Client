@@ -20,3 +20,8 @@ export const imageUpload = async (imageFile) => {
       throw new Error('Image upload failed');
     }
   };
+
+
+
+
+  // Utility function to upload images

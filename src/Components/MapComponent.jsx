@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { FaDirections } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import useShop from '../Hooks/useService';
+import useShop from '../Hooks/useShop';
 import Loading from './Loading/Loading';
 
 const MapComponent = () => {
@@ -21,7 +21,12 @@ const MapComponent = () => {
         )
       )
     );
+
   }, [search, allShop]);
+
+  const data = filteredShops?.filter((item) => item.status === 'approved')
+
+
 
   const handleMarkerClick = (shop) => {
     setSelectedShop(shop);
@@ -48,7 +53,7 @@ const MapComponent = () => {
           </div>
 
           <div className="grid grid-cols-1 gap-4 overflow-y-auto max-h-96">
-            {filteredShops.map((shop) => (
+            {data.map((shop) => (
               <div key={shop._id} className="p-4 bg-gray-100 rounded shadow">
                 <h3 className="font-bold text-lg">{shop.name}</h3>
                 <p className="text-sm text-gray-600">{shop.location}</p>
@@ -93,7 +98,7 @@ const MapComponent = () => {
                   </div>
                 </Popup>
               </Marker>
-              
+
             ))}
           </MapContainer>
         </div>

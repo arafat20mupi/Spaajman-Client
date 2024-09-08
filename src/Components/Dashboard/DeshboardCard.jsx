@@ -1,21 +1,65 @@
+import { FaTrashAlt, FaUsers } from "react-icons/fa";
+import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
+import { useQuery } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import Swal from 'sweetalert2'
 
 const DeshboardCard = () => {
-    const customers = [
-        { name: 'Jane Cooper', company: 'Microsoft', phone: '(225) 555-0118', email: 'jane@microsoft.com', country: 'United States', status: 'Active' },
-        { name: 'Ronald Richards', company: 'Yahoo', phone: '(225) 555-0118', email: 'ronald@yahoo.com', country: 'Israel', status: 'Inactive' },
-        { name: 'Ronald Richards', company: 'Yahoo', phone: '(225) 555-0118', email: 'ronald@yahoo.com', country: 'Israel', status: 'Inactive' },
-        { name: 'Ronald Richards', company: 'Yahoo', phone: '(225) 555-0118', email: 'ronald@yahoo.com', country: 'Israel', status: 'Inactive' },
-        { name: 'Ronald Richards', company: 'Yahoo', phone: '(225) 555-0118', email: 'ronald@yahoo.com', country: 'Israel', status: 'Inactive' },
-        { name: 'Ronald Richards', company: 'Yahoo', phone: '(225) 555-0118', email: 'ronald@yahoo.com', country: 'Israel', status: 'Inactive' },
-    ];
+    const axiosSecure = useAxiosPrivate();
+    const { data: users = [], refetch } = useQuery({
+        queryKey: 'users',
+        queryFn: async () => {
+            const res = await axiosSecure.get('/users')
+            return res.data;
+        }
+    });
+
+    const handleMakeAdmin = user => {
+        axiosSecure.patch(`/users/admin/${user._id}`)
+            .then(res => {
+                if (res.data.modifiedCount > 0) {
+                    refetch();
+                    toast.success(`${user.name} is now an admin`)
+                }
+            })
+    }
+
+
+    const handleDeleteUser = (user) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                axiosSecure.delete(`/users/${user._id}`)
+                    .then(res => {
+                        if (res.data.deletedCount > 0) {
+                            refetch();
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your file has been deleted.",
+                                icon: "success"
+                            });
+                        }
+                    })
+            }
+        });
+    };
+
+
     return (
         <div>
             <div className="p-8  bg-gray-50">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
                     <div className="bg-white p-6 rounded-lg shadow-md">
                         <h3 className="text-lg font-semibold">Total Customers</h3>
-                        <p className="text-2xl mt-2">5,423</p>
-                        <p className="text-gray-500">+120 this month</p>
+                        <p className="text-2xl mt-2">{users.length}</p>
                     </div>
                     <div className="bg-white p-6 rounded-lg shadow-md">
                         <h3 className="text-lg font-semibold">Members</h3>
@@ -36,43 +80,37 @@ const DeshboardCard = () => {
                         <table className="w-full">
                             <thead>
                                 <tr className="text-gray-600">
+                                    <th className="py-2 pr-10 lg:pr-0 text-left">#</th>
                                     <th className="py-2 pr-10 lg:pr-0 text-left">Customer Name</th>
-                                    <th className="py-2 pr-10 lg:pr-0 text-left">Company</th>
-                                    <th className="py-2 pr-10 lg:pr-0 text-left">Phone Number</th>
                                     <th className="py-2 pr-10 lg:pr-0 text-left">Email</th>
-                                    <th className="py-2 pr-10 lg:pr-0 text-left">Country</th>
-                                    <th className="py-2 pr-10 lg:pr-0 text-left">Status</th>
+                                    <th className="py-2 pr-10 lg:pr-0 text-left">Role</th>
+                                    <th className="py-2 pr-10 lg:pr-0 text-left">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {customers.map((customer, index) => (
-                                    <tr key={index} className="border-t text-gray-800">
-                                        <td className="py-2 pr-10 lg:pr-0">{customer.name}</td>
-                                        <td className="py-2 pr-10 lg:pr-0">{customer.company}</td>
-                                        <td className="py-2 pr-10 lg:pr-0">{customer.phone}</td>
-                                        <td className="py-2 pr-10 lg:pr-0">{customer.email}</td>
-                                        <td className="py-2 pr-10 lg:pr-0">{customer.country}</td>
-                                        <td className="py-2 pr-10 lg:pr-0">
-                                            <span
-                                                className={`px-2 py-1 rounded-full text-sm ${customer.status === 'Active'
-                                                    ? 'bg-green-100 text-green-800'
-                                                    : 'bg-red-100 text-red-800'
-                                                    }`}
-                                            >
-                                                {customer.status}
-                                            </span>
+                                {users?.map((user, index) => (
+                                    <tr key={user._id} className="border-t text-gray-800">
+                                        <td className="py-2 pr-10 lg:pr-0">{index + 1}</td>
+                                        <td className="py-2 pr-10 lg:pr-0">{user.name}</td>
+                                        <td className="py-2 pr-10 lg:pr-0">{user.email}</td>
+                                        <td>
+                                            {user.role === 'admin' ? "Admin" : <button
+                                                onClick={() => handleMakeAdmin(user)}
+                                                className="btn bg-orange-500 btn-lg">
+                                                <FaUsers className="text-white text-2xl"></FaUsers>
+                                            </button>}
+                                        </td>
+                                        <td>
+                                            <button
+                                                onClick={() => handleDeleteUser(user)}
+                                                className="btn btn-ghost btn-lg">
+                                                <FaTrashAlt className="text-red-500"></FaTrashAlt>
+                                            </button>
                                         </td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
-                    </div>
-                </div>
-                <div className="flex justify-between items-center mt-4">
-                    <span className="text-sm text-gray-600">Showing 1 to 10 of 256 entries</span>
-                    <div className="flex space-x-2">
-                        <button className="px-3 py-1 border border-gray-300 text-gray-600 rounded-lg">Previous</button>
-                        <button className="px-3 py-1 border border-gray-300 text-gray-600 rounded-lg">Next</button>
                     </div>
                 </div>
             </div>

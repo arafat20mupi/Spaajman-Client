@@ -1,5 +1,5 @@
 
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import Navbar from './Components/Navbar';
 import Footer from './Components/Footer';
 import Whatsapp from './Components/Whatsapp';
@@ -7,17 +7,19 @@ import Whatsapp from './Components/Whatsapp';
 
 
 const App = () => {
+  const location = useLocation();
+  const noHeaderFooter = location.pathname.includes('login') || location.pathname.includes('register')
   return (
-    <div className=''>
-      <Navbar />
+    <div>
+      {noHeaderFooter || <Navbar />}
       <div className='min-h-[calc(100vh-559.2px)] w-[95%] mx-auto'>
         <Outlet />
       </div>
       <Whatsapp />
       {
-      
+
       }
-      <Footer />
+      {noHeaderFooter || <Footer />}
     </div>
 
 

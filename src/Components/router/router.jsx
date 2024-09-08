@@ -18,11 +18,15 @@ import Dashboard from '../Dashboard/Dashbord';
 import ShopRegister from '../ShopRegister';
 import DeshboardCard from '../Dashboard/DeshboardCard';
 import PrivateRouter from './PrivateRouter';
+import ShopRequestAdmin from '../Dashboard/ShopRequestAdmin';
+import Error from '../Error';
+import Profile from '../Dashboard/Profile';
 
 export const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
+    errorElement: <Error />,
     children: [
       {
         path: '/',
@@ -35,7 +39,7 @@ export const router = createBrowserRouter([
       {
         path: '/services/:id',
         element: <ServicesPage />,
-        loader: ({ params }) => fetch(`https://spaajman-server.vercel.app/shop/${params.id}`)
+        loader: ({ params }) => fetch(`http://localhost:5000/shop/${params.id}`)
       },
       {
         path: "/login",
@@ -48,7 +52,7 @@ export const router = createBrowserRouter([
       {
         path: "/blog/:id",
         element: <BlogDetails />,
-        loader: ({ params }) => fetch(`https://spaajman-server.vercel.app/blogs/${params.id}`)
+        loader: ({ params }) => fetch(`http://localhost:5000/blogs/${params.id}`)
       }
       ,
       {
@@ -58,7 +62,7 @@ export const router = createBrowserRouter([
       {
         path: "/job-details/:id",
         element: <JobDetails />,
-        loader: ({ params }) => fetch(`https://spaajman-server.vercel.app/jobs/${params.id}`)
+        loader: ({ params }) => fetch(`http://localhost:5000/jobs/${params.id}`)
       }
       ,
       {
@@ -69,32 +73,41 @@ export const router = createBrowserRouter([
         path: "/gallery",
         element: <Gallery />
       },
-      {
-        path: "/dashboard",
-        element: <PrivateRouter><Dashboard /></PrivateRouter>,
-        children: [
-
-          {
-            path: "registerShop",
-            element: <ShopRegister />
-          },
-          {
-            path: "post-job",
-            element: <UserProfile />
-          },
-          {
-            path: 'Customer',
-            element: <DeshboardCard></DeshboardCard>
-          },
-          {
-            path: 'Orders',
-            element: <DeshboardCard></DeshboardCard>
-          }
-
-        ]
-      },
+      
 
 
     ],
+  },{
+    path: "/dashboard",
+    element: <PrivateRouter><Dashboard /></PrivateRouter>,
+    errorElement: <Error />,
+    children: [
+
+      {
+        path: "registerShop",
+        element: <ShopRegister />
+      },
+      {
+        path: 'profile',
+        element: <Profile />
+      },
+      {
+        path: "post-job",
+        element: <UserProfile />
+      },
+      {
+        path: 'Customer',
+        element: <DeshboardCard></DeshboardCard>
+      },
+      {
+        path: 'shop-request-admin',
+        element: <ShopRequestAdmin />
+      },
+      {
+        path: 'Orders',
+        element: <DeshboardCard></DeshboardCard>
+      }
+
+    ]
   },
 ]);

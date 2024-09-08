@@ -87,7 +87,7 @@ const Navbar = () => {
           </Link>    
           {
             user ? (
-              <Link to="/dashboard">
+              <Link to="/dashboard/profile">
                 <button className="bg-indigo-600 text-white px-5 py-2  rounded-lg shadow-lg hover:bg-indigo-700 transition duration-300 flex items-center justify-center text-center">
                  Deshboard
                 </button>
