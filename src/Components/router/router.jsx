@@ -22,6 +22,7 @@ import ShopRequestAdmin from '../Dashboard/ShopRequestAdmin';
 import Error from '../Error';
 import Profile from '../Dashboard/Profile';
 import AllShopAdmin from '../Dashboard/AllShopAdmin';
+import PostedJob from '../Dashboard/PostedJob';
 
 export const router = createBrowserRouter([
   {
@@ -113,6 +114,11 @@ export const router = createBrowserRouter([
       {
         path: 'all-shop',
         element: <AllShopAdmin />
+      },
+      {
+        path: 'PostedJob',
+        element: <PostedJob></PostedJob>
+
       }
 
     ]

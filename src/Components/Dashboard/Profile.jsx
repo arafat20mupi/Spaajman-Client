@@ -10,7 +10,7 @@ const Profile = () => {
                 <div className="relative group">
                     <img 
                         className="w-32 h-32 bg-gray-300 object-cover rounded-full border-4 border-white shadow-md" 
-                        src={user?.photoURL} 
+                        src={user?.photoURL || 'https://i.ibb.co/SXfF8yH/7.jpg'} 
                         alt="User Avatar"
                     />
                     <span className="w-4 h-4 bg-green-500 absolute rounded-full bottom-2 right-2 border-2 border-white"></span>

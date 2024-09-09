@@ -31,17 +31,16 @@ const Dashboard = () => {
 
       {/* Sidebar Menu */}
       <div
-        className={`fixed inset-y-0 left-0 z-50 bg-white w-64 shadow-md p-5 transform ${
-          menuOpen ? 'translate-x-0' : '-translate-x-full'
-        } transition-transform duration-300 md:relative md:translate-x-0`}
+        className={`fixed inset-y-0 left-0 z-50 bg-white w-64 shadow-md p-5 transform ${menuOpen ? 'translate-x-0' : '-translate-x-full'
+          } transition-transform duration-300 md:relative md:translate-x-0`}
       >
         <h1 className="text-xl md:text-2xl my-4 font-bold text-center md:text-left">Dashboard</h1>
-        <ul className="flex flex-col items-center md:items-start space-y-4">
+        <ul className="flex flex-col w-full   space-y-4">
           {isAdmin ? (
             <>
               <li>
                 <Link to="/dashboard/profile">
-                  <button className="bg-indigo-600   text-white px-4 py-2 w-full text-left rounded-lg shadow-lg hover:bg-indigo-700 transition duration-300 flex items-center">
+                  <button className="bg-indigo-600 text-white px-4 py-2 w-full text-left rounded-lg shadow-lg hover:bg-indigo-700 transition duration-300 flex items-center">
                     Profile
                   </button>
                 </Link>
@@ -67,7 +66,7 @@ const Dashboard = () => {
                   </button>
                 </Link>
               </li>
-              <hr className='border border-2 border-gray-600 w-full' />
+              <hr className='border border-gray-600 w-full' />
               <li>
                 <Link to="/">
                   <button className="bg-indigo-600 text-white px-4 py-2 w-full text-left rounded-lg shadow-lg hover:bg-indigo-700 transition duration-300 flex items-center">
@@ -83,6 +82,7 @@ const Dashboard = () => {
             </>
           ) : isShop ? (
             <>
+
               <li>
                 <Link to="/dashboard/profile">
                   <button className="bg-indigo-600 text-white px-4 py-2 w-full text-left rounded-lg shadow-lg hover:bg-indigo-700 transition duration-300 flex items-center">
@@ -98,13 +98,13 @@ const Dashboard = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/dashboard/post-job">
+                <Link to="/dashboard/PostedJob">
                   <button className="bg-indigo-600 text-white px-4 py-2 w-full text-left rounded-lg shadow-lg hover:bg-indigo-700 transition duration-300 flex items-center">
-                    Job Application
+                    Posted Job
                   </button>
                 </Link>
               </li>
-              <hr className='border border-2 border-gray-600 w-full' />
+              <hr className='border  border-gray-600 w-full' />
               <li>
                 <Link to="/">
                   <button className="bg-indigo-600 text-white px-4 py-2 w-full text-left rounded-lg shadow-lg hover:bg-indigo-700 transition duration-300 flex items-center">
@@ -134,7 +134,7 @@ const Dashboard = () => {
                   </button>
                 </Link>
               </li>
-              <hr className='border border-2 border-gray-600 w-full' />
+              <hr className='border  border-gray-600 w-full' />
               <li>
                 <Link to="/">
                   <button className="bg-indigo-600 text-white px-4 py-2 w-full text-left rounded-lg shadow-lg hover:bg-indigo-700 transition duration-300 flex items-center">
