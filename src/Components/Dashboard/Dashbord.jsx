@@ -31,7 +31,7 @@ const Dashboard = () => {
 
       {/* Sidebar Menu */}
       <div
-        className={`fixed inset-y-0 left-0 z-50 bg-white w-64 shadow-md p-5 transform ${
+        className={`fixed inset-y-0 rounded-2xl left-0 z-50 bg-white w-64 shadow-md p-5 transform ${
           menuOpen ? 'translate-x-0' : '-translate-x-full'
         } transition-transform duration-300 md:relative md:translate-x-0`}
       >

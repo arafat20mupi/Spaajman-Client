@@ -1,4 +1,4 @@
- 
+
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import useBlogs from '../Hooks/useBlogs';
@@ -29,7 +29,7 @@ const Blog = () => {
   };
 
   if (loading) return <Loading />;
-  
+
   return (
     <div className="p-5">
       <h1 className="text-2xl font-bold mb-5">Salon and Spa Blogs</h1>
@@ -40,11 +40,11 @@ const Blog = () => {
           value={searchVal}
           onChange={(e) => setSearchVal(e.target.value)}
           placeholder="Search blogs by title or tags..."
-          className="border p-2 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="border p-2 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-indigo-600"
         />
         <button
           onClick={handleBlog}
-          className="bg-blue-500 text-white p-2 rounded-r-lg transition-colors duration-300 hover:bg-blue-600"
+          className="bg-indigo-600 text-white p-2 rounded-r-lg transition-colors duration-300 hover:bg-indigo-600"
         >
           Search
         </button>
@@ -75,11 +75,17 @@ const Blog = () => {
               ))}
             </div>
 
-            <Link to={`/blog/${salonBlog._id}`}>
+            {/* <Link to={`/blog/${salonBlog._id}`}>
               <button className="my-5 w-full underline underline-offset-4 hover:no-underline relative inline-flex items-center justify-start px-6 py-3 overflow-hidden font-medium transition-all bg-white rounded hover:bg-white group">
-                <span className="w-48 h-48 rounded rotate-[-40deg] bg-purple-600 absolute bottom-0 left-0 -translate-x-full ease-out duration-500 transition-all translate-y-full mb-9 ml-9 group-hover:ml-0 group-hover:mb-32 group-hover:translate-x-0"></span>
+                <span className="w-48 h-48 rounded rotate-[-40deg] bg-indigo-600 absolute bottom-0 left-0 -translate-x-full ease-out duration-500 transition-all translate-y-full mb-9 ml-9 group-hover:ml-0 group-hover:mb-32 group-hover:translate-x-0"></span>
                 <span className="relative w-full text-left text-black transition-colors duration-300 ease-in-out group-hover:text-white">View More</span>
               </button>
+            </Link> */}
+            <Link to={`/blog/${salonBlog._id}`} class="relative my-5 inline-flex items-center justify-start inline-block px-5 py-3 overflow-hidden font-bold rounded-full group">
+              <span class="w-32 h-32 rotate-45 translate-x-12 -translate-y-2 absolute left-0 top-0 bg-indigo-500 opacity-[3%]"></span>
+              <span class="absolute top-0 left-0 w-48 h-48 -mt-1 transition-all duration-500 ease-in-out rotate-45 -translate-x-56 -translate-y-24 bg-indigo-600 opacity-100 group-hover:-translate-x-8"></span>
+              <span class="relative w-full text-left text-indigo-600 transition-colors duration-200 ease-in-out group-hover:text-white">View More</span>
+              <span class="absolute inset-0 border-2 border-indigo-600 rounded-full"></span>
             </Link>
           </div>
         ))}
