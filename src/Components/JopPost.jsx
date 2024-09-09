@@ -12,6 +12,7 @@ const UserProfile = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset
   } = useForm();
 
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -34,6 +35,7 @@ const UserProfile = () => {
       // Posting data to the server
       await axiosCommon.post('/jobs', updatedData);
       toast.success('Job Post successfully!');
+      reset();
     } catch (error) {
       toast.error(error.message);
     }
