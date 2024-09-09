@@ -53,7 +53,7 @@ const JobList = () => {
             <div className="flex justify-between">
               <Link
                 to={`/job-details/${job._id}`}
-                className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-300 ease-in-out"
+                className="bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors duration-300 ease-in-out"
               >
                 Details
               </Link>

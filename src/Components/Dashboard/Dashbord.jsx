@@ -31,8 +31,14 @@ const Dashboard = () => {
 
       {/* Sidebar Menu */}
       <div
+<<<<<<< HEAD
         className={`fixed inset-y-0 left-0 z-50 bg-white w-64 shadow-md p-5 transform ${menuOpen ? 'translate-x-0' : '-translate-x-full'
           } transition-transform duration-300 md:relative md:translate-x-0`}
+=======
+        className={`fixed inset-y-0 rounded-2xl left-0 z-50 bg-white w-64 shadow-md p-5 transform ${
+          menuOpen ? 'translate-x-0' : '-translate-x-full'
+        } transition-transform duration-300 md:relative md:translate-x-0`}
+>>>>>>> e6f1c94a52626c398515474c9a1cdbd342d607d4
       >
         <h1 className="text-xl md:text-2xl my-4 font-bold text-center md:text-left">Dashboard</h1>
         <ul className="flex flex-col w-full   space-y-4">

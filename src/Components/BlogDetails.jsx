@@ -19,15 +19,12 @@ const BlogDetails = () => {
           </span>
         ))}
       </div>
-      <Link to={'/blog'}>
-        <button className="relative mt-5 inline-flex items-center px-12 py-3 overflow-hidden text-lg font-medium text-indigo-600 border-2 border-indigo-600 rounded-full hover:text-white group hover:bg-gray-50">
-          <span className="absolute left-0 block w-full h-0 transition-all bg-indigo-600 opacity-100 group-hover:h-full top-1/2 group-hover:top-0 duration-400 ease"></span>
-          <span className="absolute right-0 flex items-center justify-start w-10 h-10 duration-300 transform translate-x-full group-hover:translate-x-0 ease">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-          </span>
-          <span className="relative">Back now</span>
-        </button>
-      </Link>
+      <Link to={'/blog'} class="relative my-5 inline-flex items-center justify-start inline-block px-5 py-3 overflow-hidden font-bold rounded-full group">
+              <span class="w-32 h-32 rotate-45 translate-x-12 -translate-y-2 absolute left-0 top-0 bg-indigo-500 opacity-[3%]"></span>
+              <span class="absolute top-0 left-0 w-48 h-48 -mt-1 transition-all duration-500 ease-in-out rotate-45 -translate-x-56 -translate-y-24 bg-indigo-600 opacity-100 group-hover:-translate-x-8"></span>
+              <span class="relative w-full text-left text-indigo-600 transition-colors duration-200 ease-in-out group-hover:text-white">Back Now</span>
+              <span class="absolute inset-0 border-2 border-indigo-600 rounded-full"></span>
+            </Link>
     </div>
 
   );
