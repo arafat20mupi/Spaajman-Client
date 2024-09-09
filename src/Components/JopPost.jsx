@@ -4,10 +4,12 @@ import { useForm } from 'react-hook-form';
 import useAxiosPublic from "../Hooks/useAxiosPublic";
 import { AuthContext } from "../Provider/AuthProvider";
 import { imageUpload } from "../Utility/multiImg";
+import { useNavigate } from "react-router-dom";
 
 const UserProfile = () => {
   const axiosCommon = useAxiosPublic();
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -36,6 +38,7 @@ const UserProfile = () => {
       await axiosCommon.post('/jobs', updatedData);
       toast.success('Job Post successfully!');
       reset();
+      navigate('/dashboard/PostedJob');
     } catch (error) {
       toast.error(error.message);
     }
