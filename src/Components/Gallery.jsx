@@ -14,17 +14,10 @@ const Gallery = () => {
       </p>
       <div className='py-14'>
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5 container mx-auto place-items-center'>
-<<<<<<< HEAD
-          {images.map((image, index) => (
-            <div key={index} className='relative group' data-aos="fade-up" data-aos-duration="700">
-              <img 
-                src={image.img}
-=======
           {jobs.map((image, index) => (
             <div key={index} className='relative group'>
               <img
                 src={image.images || 'https://i.ibb.co/SXfF8yH/7.jpg'}
->>>>>>> dd2349d0dca3d962eb5a32dbd442cb42a3119670
                 alt={`Relaxation moment ${index + 1}`}
                 className='w-[400px] h-[400px] my-3 rounded-md transition-opacity duration-300 ease-in-out group-hover:opacity-80'
               />
