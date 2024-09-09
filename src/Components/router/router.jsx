@@ -22,6 +22,7 @@ import ShopRequestAdmin from '../Dashboard/ShopRequestAdmin';
 import Error from '../Error';
 import Profile from '../Dashboard/Profile';
 import AllShopAdmin from '../Dashboard/AllShopAdmin';
+import PostedJob from '../Dashboard/PostedJob';
 
 export const router = createBrowserRouter([
   {
@@ -40,7 +41,7 @@ export const router = createBrowserRouter([
       {
         path: '/services/:id',
         element: <ServicesPage />,
-        loader: ({ params }) => fetch(`http://localhost:5000/shop/${params.id}`)
+        loader: ({ params }) => fetch(`https://spaajman-server.vercel.app/shop/${params.id}`)
       },
       {
         path: "/login",
@@ -53,7 +54,7 @@ export const router = createBrowserRouter([
       {
         path: "/blog/:id",
         element: <BlogDetails />,
-        loader: ({ params }) => fetch(`http://localhost:5000/blogs/${params.id}`)
+        loader: ({ params }) => fetch(`https://spaajman-server.vercel.app/blogs/${params.id}`)
       }
       ,
       {
@@ -63,7 +64,7 @@ export const router = createBrowserRouter([
       {
         path: "/job-details/:id",
         element: <JobDetails />,
-        loader: ({ params }) => fetch(`http://localhost:5000/jobs/${params.id}`)
+        loader: ({ params }) => fetch(`https://spaajman-server.vercel.app/jobs/${params.id}`)
       }
       ,
       {
@@ -113,6 +114,11 @@ export const router = createBrowserRouter([
       {
         path: 'all-shop',
         element: <AllShopAdmin />
+      },
+      {
+        path: 'PostedJob',
+        element: <PostedJob></PostedJob>
+
       }
 
     ]
