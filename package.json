@@ -12,6 +12,7 @@
   "dependencies": {
     "@tanstack/react-query": "^5.53.1",
     "@types/mapbox-gl": "^3.4.0",
+    "aos": "^2.3.4",
     "axios": "^1.7.7",
     "firebase": "^10.13.1",
     "ldrs": "^1.0.2",

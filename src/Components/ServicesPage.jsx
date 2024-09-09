@@ -1,20 +1,17 @@
 import { Link, useLoaderData } from 'react-router-dom';
 // import { fetchShops } from '../Data/FetchData';
-import { FaDirections } from 'react-icons/fa';
+// import { FaDirections } from 'react-icons/fa';
 
 const ServicesPage = () => {
   // single data load
   const shop = useLoaderData();
 
 
-
-
-
   return (
     <div className="p-6 max-w-2xl mx-auto bg-white shadow-md rounded-md mt-20">
       <div className=' flex justify-between'>
         <h2 className="text-2xl font-bold mb-4">{shop.name}</h2>
-        <FaDirections className=' text-3xl text-indigo-700 ml-4 cursor-pointer ' />
+        {/* <FaDirections className=' text-3xl text-indigo-700 ml-4 cursor-pointer ' /> */}
       </div>
 
       <p className="text-gray-600 mb-6">{shop.location}</p>

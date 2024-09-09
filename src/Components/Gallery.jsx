@@ -1,5 +1,3 @@
- 
- 
 import { Link } from 'react-router-dom';
 import image1 from '../assets/slide-images/1.jpg';
 import image2 from '../assets/slide-images/2.jpg';
@@ -32,17 +30,17 @@ const Gallery = () => {
 
   return (
     <div className='py-5 mt-10'>
-      <h1 className='text-indigo-600 text-center text-5xl md:text-5xl lg:text-7xl py-9'>
+      <h1 data-aos="fade-up" data-aos-duration="700" className='text-indigo-600 text-center text-5xl md:text-5xl lg:text-7xl py-9'>
         Moments of Relaxation
       </h1>
-      <p className='lg:text-xl py-3 text-center'>
+      <p data-aos="fade-up" data-aos-duration="760" className='lg:text-xl py-3 text-center'>
         Our gallery showcases the essence of relaxation. From our inviting lounge areas to the carefully curated treatment rooms, every corner of our spa is dedicated to helping you unwind. Browse through and let the images transport you to a place of peace.
       </p>
       <div className='py-14'>
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5 container mx-auto place-items-center'>
           {images.map((image, index) => (
-            <div key={index} className='relative group'>
-              <img
+            <div key={index} className='relative group' data-aos="fade-up" data-aos-duration="700">
+              <img 
                 src={image.img}
                 alt={`Relaxation moment ${index + 1}`}
                 className='w-[400px] h-[400px] my-3 rounded-md transition-opacity duration-300 ease-in-out group-hover:opacity-80'

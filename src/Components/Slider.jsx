@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import './scrollbar.css'
+import { useEffect } from 'react';
 import image1 from '.././assets/slide-images/1.jpg'
 import image2 from '.././assets/slide-images/2.jpg'
 import image3 from '.././assets/slide-images/3.jpg'
@@ -13,7 +14,12 @@ import image10 from '.././assets/slide-images/10.jpg'
 import image11 from '.././assets/slide-images/11.jpg'
 import image12 from '.././assets/slide-images/12.jpg'
 import { useNavigate } from 'react-router-dom';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 const Slider = () => {
+  useEffect(()=>{
+      AOS.init({duration:1000})
+  },[])
   const scrollRef = useRef(null);
   const navigate = useNavigate()
 
@@ -68,10 +74,10 @@ const Slider = () => {
   }
   return (
     <>
-      <div className='mx-5 lg:mx-20 bg-white h-full'>
+      <div className=' bg-white h-[100vh] w-full' style={{overflowX:'hidden'}}>
         <div className='text-center'>
-          <h1 className='text-indigo-600 text-3xl md:text-5xl lg:text-7xl py-9 slider-h1'>A Peaceful Retreat</h1>
-          <p className='lg:text-xl py-3'>
+          <h1  data-aos-duration="1000" data-aos="fade-left" className='text-indigo-600 text-3xl md:text-5xl lg:text-7xl py-9 slider-h1'>A Peaceful Retreat</h1>
+          <p data-aos="fade-up" className='lg:text-xl py-3'>
             Step into our peaceful retreat and leave the stress of the outside world behind. Spaajman is your personal escape, designed to refresh and revitalize.
           </p>
         </div>

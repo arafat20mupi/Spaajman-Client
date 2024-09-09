@@ -15,7 +15,9 @@ const MapComponent = () => {
   useEffect(() => {
     setFilteredShops(
       allShop.filter((shop) =>
-        shop.name.toLowerCase().includes(search.toLowerCase()) ||
+        shop.location.toLowerCase().includes(search.toLowerCase()) ||
+
+        // shop.name.toLowerCase().includes(search.toLowerCase()) ||
         shop.services.some((service) =>
           service.name.toLowerCase().includes(search.toLowerCase())
         )
@@ -38,7 +40,7 @@ const MapComponent = () => {
 
 
   return (
-    <div className="relative h-screen pt-16">
+    <div className="relative h-[100vh] pt-16">
       <div className="flex flex-col-reverse md:flex-row p-4 h-full">
         <div className="flex flex-col w-full md:w-1/3 p-4 bg-white shadow-md rounded-md mb-4 md:mb-0 md:mr-4 z-10 overflow-hidden">
           <div className="flex items-center mb-4">

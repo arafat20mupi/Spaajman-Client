@@ -96,7 +96,7 @@ const Navbar = () => {
           }
           {user ? (
             <button onClick={handleLogOut} className="border-2 border-indigo-600 text-indigo-600 px-5 py-2 w-32 rounded-lg shadow-lg hover:bg-indigo-50 transition duration-300 flex items-center justify-center text-center">
-              LogOut
+              Log out
             </button>
           ) : (
             <Link to="/register">
