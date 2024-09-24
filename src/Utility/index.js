@@ -22,6 +22,3 @@ export const imageUpload = async (imageFile) => {
   };
 
 
-
-
-  // Utility function to upload images
