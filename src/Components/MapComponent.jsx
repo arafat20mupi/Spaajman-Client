@@ -16,11 +16,11 @@ const MapComponent = () => {
   const [to, setTo] = useState(null);
   const [directions, setDirections] = useState(null);
   const [showDirections, setShowDirections] = useState(false);
-  const [distance, setDistance] = useState(''); // To store distance
+  const [distance, setDistance] = useState(''); 
   const [duration, setDuration] = useState(''); // To store time duration
 
-  const apiKey = 'AIzaSyCT-tCvSy-iY8IaVI4Y_pT72iAUgD3KgVg';
-
+  const apiKey = import.meta.env.VITE_MAPS_API_KEY;
+  
   useEffect(() => {
     if (!loading && allShop.length) {
       setFilteredShops(
@@ -46,18 +46,17 @@ const MapComponent = () => {
     const directionsService = new window.google.maps.DirectionsService();
     directionsService.route(
       {
-        origin: from,  // User-selected origin
-        destination: to, // Shop's coordinates
+        origin: from,
+        destination: to,
         travelMode: window.google.maps.TravelMode.DRIVING,
       },
       (result, status) => {
         if (status === window.google.maps.DirectionsStatus.OK) {
           setDirections(result);
 
-          // Extracting distance and duration from result
-          const leg = result.routes[0].legs[0]; // First route and first leg of the trip
-          setDistance(leg.distance.text); // e.g., "15 km"
-          setDuration(leg.duration.text); // e.g., "20 mins"
+          const leg = result.routes[0].legs[0];
+          setDistance(leg.distance.text);
+          setDuration(leg.duration.text);
         } else {
           console.error(`Error fetching directions: ${status}`, result);
         }
@@ -67,13 +66,12 @@ const MapComponent = () => {
 
   const handleDirectionToggle = () => {
     setShowDirections((prevState) => !prevState);
-    setDirections(null); // Reset directions on toggle
+    setDirections(null);
   };
 
   if (loading) {
     return <Loading />;
   }
-
   return (
     <div className="relative h-[100vh] pt-16">
       <div className="flex flex-col-reverse md:flex-row p-4 h-full">
@@ -111,7 +109,7 @@ const MapComponent = () => {
 
         {/* Google Map Panel */}
         <div className="flex-1 h-96 md:h-auto relative">
-          <LoadScript googleMapsApiKey={apiKey} loadingElement={<div>Loading Map...</div>}>
+          <LoadScript googleMapsApiKey={apiKey} loadingElement={<Loading></Loading>}>
             <GoogleMap
               mapContainerStyle={{ height: '100%', width: '100%' }}
               center={{ lat: 25.4052, lng: 55.5136 }}

@@ -3,7 +3,6 @@ import useJobs from '../Hooks/useJobs';
 
 const Gallery = () => {
   const [jobs] = useJobs()
-  console.log(jobs);
   return (
     <div className='py-5 mt-10'>
       <h1 data-aos="fade-up" data-aos-duration="700" className='text-indigo-600 text-center text-5xl md:text-5xl lg:text-7xl py-9'>
