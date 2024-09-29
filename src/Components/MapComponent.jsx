@@ -1,49 +1,64 @@
 import { useState, useEffect } from 'react';
-import { GoogleMap, Marker, InfoWindow, LoadScript, DirectionsRenderer } from '@react-google-maps/api';
+import {
+  GoogleMap,
+  MarkerF,
+  InfoWindow,
+  LoadScript,
+  DirectionsRenderer,
+  Autocomplete,
+  DrawingManager,
+  TrafficLayer,
+  StreetViewPanorama,
+} from '@react-google-maps/api';
 import { Link } from 'react-router-dom';
 import useShop from '../Hooks/useShop';
 import Loading from './Loading/Loading';
-import { FaDirections } from "react-icons/fa";
+import { FaDirections, FaMapMarkerAlt, FaTrashAlt } from 'react-icons/fa';
 
 const MapComponent = () => {
   const [search, setSearch] = useState('');
   const [filteredShops, setFilteredShops] = useState([]);
   const [selectedShop, setSelectedShop] = useState(null);
   const [allShop, loading] = useShop();
+  const [autocomplete, setAutocomplete] = useState(null);
 
   // Directions state
   const [from, setFrom] = useState('');
-  const [to, setTo] = useState(null);
+  const [to, setTo] = useState('');
   const [directions, setDirections] = useState(null);
   const [showDirections, setShowDirections] = useState(false);
-  const [distance, setDistance] = useState(''); 
-  const [duration, setDuration] = useState(''); // To store time duration
+  const [distance, setDistance] = useState('');
+  const [duration, setDuration] = useState('');
+  const [trafficLayerVisible, setTrafficLayerVisible] = useState(false);
+  const [streetViewVisible, setStreetViewVisible] = useState(false);
+  const [drawingManagerVisible, setDrawingManagerVisible] = useState(false);
 
   const apiKey = import.meta.env.VITE_MAPS_API_KEY;
-  
+
   useEffect(() => {
     if (!loading && allShop.length) {
       setFilteredShops(
-        allShop.filter((shop) =>
-          shop.location.toLowerCase().includes(search.toLowerCase()) ||
-          shop.services.some((service) =>
-            service.name.toLowerCase().includes(search.toLowerCase())
-          )
+        allShop.filter(
+          (shop) =>
+            shop.location.toLowerCase().includes(search.toLowerCase()) ||
+            shop.services.some((service) =>
+              service.name.toLowerCase().includes(search.toLowerCase())
+            )
         )
       );
     }
   }, [search, allShop, loading]);
 
-  const data = filteredShops?.filter((item) => item.status === 'approved');
+  const data = filteredShops.filter((item) => item.status === 'approved');
 
   const handleGo = () => {
     if (!from || !to) {
-      console.log(from, to);
       console.error('Please select a valid "From" location.');
       return;
     }
 
     const directionsService = new window.google.maps.DirectionsService();
+    
     directionsService.route(
       {
         origin: from,
@@ -53,7 +68,6 @@ const MapComponent = () => {
       (result, status) => {
         if (status === window.google.maps.DirectionsStatus.OK) {
           setDirections(result);
-
           const leg = result.routes[0].legs[0];
           setDistance(leg.distance.text);
           setDuration(leg.duration.text);
@@ -64,14 +78,45 @@ const MapComponent = () => {
     );
   };
 
-  const handleDirectionToggle = () => {
-    setShowDirections((prevState) => !prevState);
+  const handleDirectionToggle = (shop) => {
+    setShowDirections(true);
+    if (shop) {
+      setTo(`${shop.location}`); 
+    }
+  };
+
+  const onAutocompleteLoad = (autocompleteInstance) => {
+    setAutocomplete(autocompleteInstance);
+  };
+
+  const onPlaceChanged = () => {
+    if (autocomplete !== null) {
+      setFrom(autocomplete.getPlace().formatted_address);
+    } else {
+      console.log('Autocomplete is not loaded yet!');
+    }
+  };
+
+  const resetDirections = () => {
+    setFrom('');
+    setTo('');
     setDirections(null);
+    setDistance('');
+    setDuration('');
+    setShowDirections(false);
   };
 
   if (loading) {
     return <Loading />;
   }
+
+  const mapCenter = allShop.length
+    ? {
+        lat: Number(allShop[0].position.longitude), // Use the first shop's position
+        lng: Number(allShop[0].position.latitude),
+      }
+    : { lat: 55.5136, lng: 25.4052 };
+
   return (
     <div className="relative h-[100vh] pt-16">
       <div className="flex flex-col-reverse md:flex-row p-4 h-full">
@@ -88,11 +133,14 @@ const MapComponent = () => {
           </div>
 
           <div className="grid grid-cols-1 gap-4 overflow-y-auto max-h-96">
-            {data?.map((shop) => (
+            {data.map((shop) => (
               <div key={shop._id} className="p-4 bg-gray-100 rounded shadow">
                 <div className="flex justify-between">
                   <h3 className="font-bold text-lg">{shop.name}</h3>
-                  <button className="p-2 bg-slate-50 rounded-full" onClick={handleDirectionToggle}>
+                  <button
+                    className="p-2 bg-slate-50 rounded-full"
+                    onClick={() => handleDirectionToggle(shop)}
+                  >
                     <FaDirections />
                   </button>
                 </div>
@@ -109,80 +157,120 @@ const MapComponent = () => {
 
         {/* Google Map Panel */}
         <div className="flex-1 h-96 md:h-auto relative">
-          <LoadScript googleMapsApiKey={apiKey} loadingElement={<Loading></Loading>}>
-            <GoogleMap
-              mapContainerStyle={{ height: '100%', width: '100%' }}
-              center={{ lat: 25.4052, lng: 55.5136 }}
-              zoom={10}
-            >
-              {filteredShops?.map((shop) => (
-                <Marker
-                  key={shop._id}
-                  position={{
-                    lat: Number(shop.position[1]),
-                    lng: Number(shop.position[0]),
-                  }}
-                />
-              ))}
+          <LoadScript googleMapsApiKey={apiKey} libraries={['places', 'drawing']}>
+            <GoogleMap mapContainerStyle={{ height: '100%', width: '100%' }} center={mapCenter} zoom={10}>
+              {filteredShops.map((shop) => {
+                const position = {
+                  lat: shop.position.longitude, 
+                  lng: shop.position.latitude, 
+                };
+                return (
+                  <MarkerF
+                    key={shop._id}
+                    position={position}
+                    onClick={() => setSelectedShop(shop)}
+                  />
+                );
+              })}
 
               {selectedShop && (
                 <InfoWindow
                   position={{
-                    lat: Number(selectedShop.position[1]),
-                    lng: Number(selectedShop.position[0]),
+                    lat: selectedShop.position.longitude,
+                    lng: selectedShop.position.latitude,
                   }}
                   onCloseClick={() => setSelectedShop(null)}
                 >
                   <div>
                     <div className="flex justify-between">
                       <h3 className="font-bold text-lg">{selectedShop.name}</h3>
-                      <button className="p-2 bg-slate-50 rounded-full" onClick={handleDirectionToggle}>
+                      <button
+                        className="p-2 bg-slate-50 rounded-full"
+                        onClick={() => handleDirectionToggle(selectedShop)}
+                      >
                         <FaDirections />
                       </button>
                     </div>
                     <p className="text-sm">{selectedShop.location}</p>
+                    {selectedShop.services.map((service) => (
+                      <div key={service.name} className="flex items-center">
+                        <span>{service.name} (Rating: {service.rating})</span>
+                      </div>
+                    ))}
                     <Link to={`/services/${selectedShop._id}`}>
-                      <button className="p-1 bg-indigo-500 text-white rounded">
-                        View Service
-                      </button>
+                      <button className="p-1 bg-indigo-500 text-white rounded">View Service</button>
                     </Link>
                   </div>
                 </InfoWindow>
               )}
-
-              {/* Render Directions if available */}
               {directions && <DirectionsRenderer directions={directions} />}
+
+              {drawingManagerVisible && (
+                <DrawingManager
+                  onLoad={(drawingManager) => console.log(drawingManager)}
+                  onPolygonComplete={(polygon) => console.log(polygon)}
+                  options={{
+                    drawingMode: window.google.maps.drawing.OverlayType.POLYGON,
+                    drawingControl: true,
+                    drawingControlOptions: {
+                      position: window.google.maps.ControlPosition.TOP_CENTER,
+                      style: window.google.maps.drawing.DrawingControlStyle.HORIZONTAL_BAR,
+                      // Specify which control should appear
+                      control: [window.google.maps.drawing.OverlayType.MARKER, window.google.maps.drawing.OverlayType.POLYGON],
+                    },
+                  }}
+                />
+              )}
+
+              {/* Traffic Layer */}
+              {trafficLayerVisible && <TrafficLayer />}
+
+              {/* Street View */}
+              {streetViewVisible && (
+                <StreetViewPanorama
+                  position={mapCenter}
+                  visible={streetViewVisible}
+                  options={{ enableCloseButton: true }}
+                />
+              )}
             </GoogleMap>
           </LoadScript>
         </div>
       </div>
+
       {/* Directions Form */}
       {showDirections && (
-        <div className="fixed top-16 left-1/2 transform -translate-x-1/2 bg-white shadow-lg p-4 rounded-md z-20 w-80">
-          <h3 className="text-lg font-semibold">Get Directions</h3>
-          <input
-            type="text"
-            placeholder="From"
-            value={from}
-            onChange={(e) => setFrom(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded mb-2"
-          />
-          {/* Display the shop location in the 'To' field (read-only) */}
-          <input
-            type="text"
-            placeholder="To"
-            onChange={(e) => setTo(e.target.value)}
-            value={to}
-            className="w-full p-2 border border-gray-300 rounded mb-2"
-          />
-          <button onClick={handleGo} className="w-full p-2 bg-indigo-500 text-white rounded">
-            Go
-          </button>
-          {/* Show distance and time */}
-          {distance && duration && (
-            <div className="mt-2">
-              <div>Distance: {distance}</div>
-              <div>Time: {duration}</div>
+        <div className="fixed top-16 right-0 p-4 bg-white shadow-md rounded-md z-20">
+          <h3 className="font-bold text-lg mb-2">Directions</h3>
+          <div className="flex mb-2">
+            <Autocomplete onLoad={onAutocompleteLoad} onPlaceChanged={onPlaceChanged}>
+              <input
+                type="text"
+                placeholder="From"
+                value={from}
+                onChange={(e) => setFrom(e.target.value)}
+                className="px-2 py-1 w-40 border border-gray-300 rounded-md"
+              />
+            </Autocomplete>
+            <FaMapMarkerAlt className="mx-2" />
+            <input
+              type="text"
+              placeholder="To"
+              value={to}
+              onChange={(e) => setTo(e.target.value)}
+              className="px-2 py-1 w-40 border border-gray-300 rounded-md"
+            />
+            <button className="bg-indigo-500 text-white rounded px-2 py-1" onClick={handleGo}>
+              Go
+            </button>
+            <button className="ml-2 bg-red-500 text-white rounded px-2 py-1" onClick={resetDirections}>
+              <FaTrashAlt />
+            </button>
+          </div>
+          {directions && (
+            <div>
+              <p>Distance: {distance}</p>
+              <p>Duration: {duration}</p>
             </div>
           )}
         </div>

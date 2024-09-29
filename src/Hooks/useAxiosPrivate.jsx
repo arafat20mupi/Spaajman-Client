@@ -8,7 +8,7 @@ const axiosPrivate = axios.create({
     // baseURL: "http://localhost:5000"
 
     // Arafat
-    baseURL: 'https://spaajman-server.vercel.app'
+    baseURL: 'http://localhost:5000'
 });
 const useAxiosPrivate = () => {
     return axiosPrivate;

@@ -22,7 +22,7 @@ const ShopRegister = () => {
     const { name, location, registerAs, services, shopImage, latitude, longitude } = data;
 
     try {
-      const img = await imageUpload(shopImage); // Use the first file from the FileList
+      const img = await imageUpload(shopImage); 
       const payload = {
         name,
         email: user.email,
@@ -35,8 +35,11 @@ const ShopRegister = () => {
           },
         ],
         img,
-        position: [parseFloat(latitude), parseFloat(longitude)],
-        registerAs,
+        position: {
+          latitude: parseFloat(latitude),
+          longitude: parseFloat(longitude),
+        },
+        registerAs
       };
 
 
