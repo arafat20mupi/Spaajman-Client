@@ -3,8 +3,8 @@ import Slider from "../Slider"
 const Home = () => {
   return (
     <>
-    <MapComponent />
     <Slider/>
+    <MapComponent />
     </>
   )
 }

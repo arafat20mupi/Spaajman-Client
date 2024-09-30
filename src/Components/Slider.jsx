@@ -74,7 +74,7 @@ const Slider = () => {
   }
   return (
     <>
-      <div className=' bg-white h-[100vh] w-full' style={{overflowX:'hidden'}}>
+      <div className=' bg-white h-[100vh] mt-16 w-full' style={{overflowX:'hidden'}}>
         <div className='text-center'>
           <h1  data-aos-duration="1000" data-aos="fade-left" className='text-indigo-600 text-3xl md:text-5xl lg:text-7xl py-9 slider-h1'>A Peaceful Retreat</h1>
           <p data-aos="fade-up" className='lg:text-xl py-3'>

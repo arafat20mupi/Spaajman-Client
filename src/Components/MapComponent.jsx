@@ -13,7 +13,8 @@ import {
 import { Link } from 'react-router-dom';
 import useShop from '../Hooks/useShop';
 import Loading from './Loading/Loading';
-import { FaDirections, FaMapMarkerAlt, FaTrashAlt } from 'react-icons/fa';
+import { FaDirections, FaTrashAlt } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 
 const MapComponent = () => {
   const [search, setSearch] = useState('');
@@ -50,15 +51,19 @@ const MapComponent = () => {
   }, [search, allShop, loading]);
 
   const data = filteredShops.filter((item) => item.status === 'approved');
+  
+  const handleJourneyStart = () =>{
+
+  }
 
   const handleGo = () => {
     if (!from || !to) {
-      console.error('Please select a valid "From" location.');
+      toast.error('Please select a valid "From" location.');
       return;
     }
 
     const directionsService = new window.google.maps.DirectionsService();
-    
+
     directionsService.route(
       {
         origin: from,
@@ -69,6 +74,7 @@ const MapComponent = () => {
         if (status === window.google.maps.DirectionsStatus.OK) {
           setDirections(result);
           const leg = result.routes[0].legs[0];
+          console.log(leg)
           setDistance(leg.distance.text);
           setDuration(leg.duration.text);
         } else {
@@ -81,7 +87,7 @@ const MapComponent = () => {
   const handleDirectionToggle = (shop) => {
     setShowDirections(true);
     if (shop) {
-      setTo(`${shop.location}`); 
+      setTo(`${shop.location}`);
     }
   };
 
@@ -104,6 +110,9 @@ const MapComponent = () => {
     setDistance('');
     setDuration('');
     setShowDirections(false);
+    setDrawingManagerVisible(false)
+    setStreetViewVisible(false)
+    setTrafficLayerVisible(false)
   };
 
   if (loading) {
@@ -112,9 +121,9 @@ const MapComponent = () => {
 
   const mapCenter = allShop.length
     ? {
-        lat: Number(allShop[0].position.longitude), // Use the first shop's position
-        lng: Number(allShop[0].position.latitude),
-      }
+      lat: Number(allShop[0].position.longitude), // Use the first shop's position
+      lng: Number(allShop[0].position.latitude),
+    }
     : { lat: 55.5136, lng: 25.4052 };
 
   return (
@@ -156,13 +165,13 @@ const MapComponent = () => {
         </div>
 
         {/* Google Map Panel */}
-        <div className="flex-1 h-96 md:h-auto relative">
+        <div className="flex-1 w-full h-96 md:h-auto ">
           <LoadScript googleMapsApiKey={apiKey} libraries={['places', 'drawing']}>
             <GoogleMap mapContainerStyle={{ height: '100%', width: '100%' }} center={mapCenter} zoom={10}>
               {filteredShops.map((shop) => {
                 const position = {
-                  lat: shop.position.longitude, 
-                  lng: shop.position.latitude, 
+                  lat: shop.position.longitude,
+                  lng: shop.position.latitude,
                 };
                 return (
                   <MarkerF
@@ -240,32 +249,37 @@ const MapComponent = () => {
 
       {/* Directions Form */}
       {showDirections && (
-        <div className="fixed top-16 right-0 p-4 bg-white shadow-md rounded-md z-20">
+        <div className="fixed top-20 right-0 p-4 bg-white shadow-md rounded-md z-20">
           <h3 className="font-bold text-lg mb-2">Directions</h3>
-          <div className="flex mb-2">
+          <div className="md:flex flex-col space-y-1 mb-2">
             <Autocomplete onLoad={onAutocompleteLoad} onPlaceChanged={onPlaceChanged}>
               <input
                 type="text"
                 placeholder="From"
                 value={from}
                 onChange={(e) => setFrom(e.target.value)}
-                className="px-2 py-1 w-40 border border-gray-300 rounded-md"
+                className="px-2 py-1  border border-gray-300 rounded-md"
               />
             </Autocomplete>
-            <FaMapMarkerAlt className="mx-2" />
+
             <input
               type="text"
               placeholder="To"
               value={to}
               onChange={(e) => setTo(e.target.value)}
-              className="px-2 py-1 w-40 border border-gray-300 rounded-md"
+              className="px-2 py-1  border border-gray-300 rounded-md"
             />
-            <button className="bg-indigo-500 text-white rounded px-2 py-1" onClick={handleGo}>
-              Go
-            </button>
-            <button className="ml-2 bg-red-500 text-white rounded px-2 py-1" onClick={resetDirections}>
-              <FaTrashAlt />
-            </button>
+            <div className='flex space-x-2'>
+              <button className="bg-indigo-500 text-white rounded px-2 py-1" onClick={handleGo}>
+                Go
+              </button>
+              <button className="bg-indigo-500 text-white rounded px-2 py-1" onClick={handleJourneyStart}>
+                Start Journey
+              </button>
+              <button className="  bg-red-500 text-white rounded px-2 py-1" onClick={resetDirections}>
+                <FaTrashAlt />
+              </button>
+            </div>
           </div>
           {directions && (
             <div>
