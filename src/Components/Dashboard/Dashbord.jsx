@@ -141,6 +141,13 @@ const Dashboard = () => {
                   </button>
                 </Link>
               </li>
+              {/* <li>
+                <Link to="/dashboard/updateProfile">
+                  <button className="bg-indigo-600 text-white px-4 py-2 w-full text-left rounded-lg shadow-lg hover:bg-indigo-700 transition duration-300 flex items-center">
+                    Update Profile
+                  </button>
+                </Link>
+              </li> */}
               <hr className='border  border-gray-600 w-full' />
               <li>
                 <Link to="/">

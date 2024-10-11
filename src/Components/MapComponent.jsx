@@ -74,7 +74,6 @@ const MapComponent = () => {
         if (status === window.google.maps.DirectionsStatus.OK) {
           setDirections(result);
           const leg = result.routes[0].legs[0];
-          console.log(leg)
           setDistance(leg.distance.text);
           setDuration(leg.duration.text);
         } else {
@@ -119,18 +118,13 @@ const MapComponent = () => {
     return <Loading />;
   }
 
-  const mapCenter = allShop.length
-    ? {
-      lat: Number(allShop[0].position.longitude), // Use the first shop's position
-      lng: Number(allShop[0].position.latitude),
-    }
-    : { lat: 55.5136, lng: 25.4052 };
+  const mapCenter = { lng: 55.5136, lat: 25.4052 };
 
   return (
-    <div className="relative h-[100vh] pt-16">
-      <div className="flex flex-col-reverse md:flex-row p-4 h-full">
+    <div className="relative mt-2 h-[100vh] ">
+      <div className="flex flex-col-reverse md:flex-row  h-full">
         {/* Search and List Panel */}
-        <div className="flex flex-col w-full md:w-1/3 p-4 bg-white shadow-md rounded-md mb-4 md:mb-0 md:mr-4 z-10 overflow-hidden">
+        <div className="flex flex-col w-full md:w-1/ flex-1 p-4 bg-white shadow-md rounded-md mb-4 md:mb-0 md:mr-4 z-10 overflow-hidden">
           <div className="flex items-center mb-4">
             <input
               type="text"
@@ -167,7 +161,7 @@ const MapComponent = () => {
         {/* Google Map Panel */}
         <div className="flex-1 w-full h-96 md:h-auto ">
           <LoadScript googleMapsApiKey={apiKey} libraries={['places', 'drawing']}>
-            <GoogleMap mapContainerStyle={{ height: '100%', width: '100%' }} center={mapCenter} zoom={10}>
+            <GoogleMap mapContainerStyle={{ height: '100%', width: '100%' }} center={mapCenter} zoom={14}>
               {filteredShops.map((shop) => {
                 const position = {
                   lat: shop.position.longitude,

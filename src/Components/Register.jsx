@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import gradienBg from '../assets/g.jpeg';
 import { Link, useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { AuthContext } from '../Provider/AuthProvider';
 import useAxiosPublic from '../Hooks/useAxiosPublic';
 import toast from 'react-hot-toast';
@@ -12,21 +12,24 @@ const Register = () => {
   const { register, handleSubmit, watch, reset, formState: { errors } } = useForm();
   const navigate = useNavigate();
 
+  // State to handle password visibility
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const onSubmit = data => {
     const { name, email, password, photo } = data;
 
-    
     if (password.length < 6) {
       toast.error('Password should contain at least six letters!');
       return;
     }
-    
+
     // Create user and update profile
     createUser(email, password)
       .then(() => {
         updateprofile(name, photo)
           .then(() => {
-            const userInfo = { name, email,password };
+            const userInfo = { name, email, password };
             axiosPublic.post('/users', userInfo)
               .then(res => {
                 if (res.data.insertedId) {
@@ -131,13 +134,20 @@ const Register = () => {
                   <p className="mb-2 text-gray-900 font-semibold">Password *</p>
                   <input
                     className="px-4 py-3.5 w-full text-gray-400 font-medium placeholder-gray-400 bg-white outline-none border border-gray-300 rounded-lg"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     placeholder="******"
                     {...register('password', {
                       required: 'This field is required',
                       minLength: { value: 6, message: 'Password must be at least 6 characters' },
                     })}
                   />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="text-sm text-indigo-600 hover:underline"
+                  >
+                    {showPassword ? 'Hide Password' : 'Show Password'}
+                  </button>
                   {errors.password && (
                     <p className="text-red-600">{errors.password.message}</p>
                   )}
@@ -148,13 +158,20 @@ const Register = () => {
                   <p className="mb-2 text-gray-900 font-semibold">Confirm Password *</p>
                   <input
                     className="px-4 py-3.5 w-full text-gray-400 font-medium placeholder-gray-400 bg-white outline-none border border-gray-300 rounded-lg"
-                    type="password"
+                    type={showConfirmPassword ? "text" : "password"}
                     placeholder="******"
                     {...register('confirmPassword', {
                       required: 'Confirm Password is required',
                       validate: (value) => value === watch('password') || 'Passwords do not match',
                     })}
                   />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="text-sm text-indigo-600 hover:underline"
+                  >
+                    {showConfirmPassword ? 'Hide Password' : 'Show Password'}
+                  </button>
                   {errors.confirmPassword && (
                     <p className="text-red-600">{errors.confirmPassword.message}</p>
                   )}

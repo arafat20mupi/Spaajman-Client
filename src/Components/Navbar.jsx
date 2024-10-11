@@ -1,15 +1,33 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { FaHome, FaImage, FaSuitcase, FaBlogger } from 'react-icons/fa';
 import { IoMdAdd } from 'react-icons/io';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../Provider/AuthProvider';
 import toast from 'react-hot-toast';
+import useShopAdmin from '../Hooks/useShopAdmin';
+import axios from 'axios';
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, logOut } = useContext(AuthContext);
+  const [userData, setUserData ] = useState(null);
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+  useEffect(() => {
+    if (user?.email) {
+      const fetchUser = async () => {
+        try {
+          const response = await axios.get(`https://spaajman-server.vercel.app/shopData/${user.email}`);
+          setUserData(response.data);
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        }
+      };
+      fetchUser();
+    }
+  }, [user?.email, setUserData]);
+
+  const [isShop, isLoading] = useShopAdmin();
 
   const handleLogOut = () => {
     logOut();
@@ -17,11 +35,13 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="p-4 bg-white shadow-md flex justify-between items-center fixed top-0 left-0 w-full z-[200]">
+    <nav className="md:p-4 p-2 bg-white shadow-md flex justify-between items-center fixed top-0 left-0 w-full z-[200]">
       <div className="text-2xl font-bold text-indigo-700">
-        <h1>Spaajman</h1>
-      </div>
 
+        {
+          isShop && !isLoading ? <h1>{userData?.name}</h1> : <h1>Sparlex</h1>
+        }
+      </div>
       <div className="block md:hidden">
         <button
           onClick={toggleMenu}
@@ -32,7 +52,7 @@ const Navbar = () => {
             isMenuOpen ?
 
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#4438c9" fill="none">
-                <path d="M19.0005 4.99988L5.00049 18.9999M5.00049 4.99988L19.0005 18.9999" stroke="currentColor" strokeWidth="1.5"  strokeLinejoin="round" />
+                <path d="M19.0005 4.99988L5.00049 18.9999M5.00049 4.99988L19.0005 18.9999" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
               </svg>
               :
               <svg
@@ -84,12 +104,12 @@ const Navbar = () => {
               <FaSuitcase className="mr-2" />
               Find a Job
             </button>
-          </Link>    
+          </Link>
           {
             user ? (
               <Link to="/dashboard/profile">
                 <button className="bg-indigo-600 text-white px-5 py-2  rounded-lg shadow-lg hover:bg-indigo-700 transition duration-300 flex items-center justify-center text-center">
-                 Dashboard
+                  Dashboard
                 </button>
               </Link>
             ) : ''

@@ -17,7 +17,7 @@ const JobList = () => {
 
   const filteredJobs = selectedTags.length === 0
     ? jobs
-    : jobs?.filter(job => job.tags.includes(selectedTags[0]));
+    : jobs?.filter(job => job.role.includes(selectedTags[0]));
 
   return (
     <div className="p-16 pt-24">
@@ -25,19 +25,19 @@ const JobList = () => {
 
       <div className="text-center mb-6">
         <button
-          onClick={() => handleTagChange('Salon')}
+          onClick={() => handleTagChange('salon')}
           className={`py-2 px-4 rounded-lg mr-2 ${selectedTags.includes('Salon') ? 'bg-blue-600 text-white' : 'bg-blue-300 text-blue-800'}`}
         >
           Salon
         </button>
         <button
-          onClick={() => handleTagChange('Spa')}
+          onClick={() => handleTagChange('spa')}
           className={`py-2 px-4 rounded-lg mr-2 ${selectedTags.includes('Spa') ? 'bg-blue-600 text-white' : 'bg-blue-300 text-blue-800'}`}
         >
           Spa
         </button>
         <button
-          onClick={() => handleTagChange('Massage')}
+          onClick={() => handleTagChange('massage')}
           className={`py-2 px-4 rounded-lg mr-2 ${selectedTags.includes('Massage') ? 'bg-blue-600 text-white' : 'bg-blue-300 text-blue-800'}`}
         >
           Massage

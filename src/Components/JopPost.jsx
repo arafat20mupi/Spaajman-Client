@@ -143,14 +143,6 @@ const UserProfile = () => {
                   </div>
                   <div className="w-full md:flex-1 p-3">
                     <input
-                      // {...register("email", {
-                      //   required: "Email is required",
-                      //   pattern: {
-                      //     value:
-                      //       /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                      //     message: "Invalid email address",
-                      //   },
-                      // })}
                       defaultValue={user.email}
                       disabled
                       className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-indigo-600 border border-coolGray-200 rounded-lg shadow-input"
@@ -219,7 +211,7 @@ const UserProfile = () => {
                 <div className="flex flex-wrap -m-3">
                   <div className="w-full md:w-1/3 p-3">
                     <p className="text-sm text-coolGray-800 font-semibold">
-                      Your  Responsibilities
+                      Your Responsibilities
                     </p>
                   </div>
                   <div className="w-full md:flex-1 p-3">
@@ -229,7 +221,6 @@ const UserProfile = () => {
                       type="text"
                       placeholder="Your Company Responsibilities"
                     />
-
                   </div>
                 </div>
               </div>
@@ -262,7 +253,7 @@ const UserProfile = () => {
                 <div className="flex flex-wrap -m-3">
                   <div className="w-full md:w-1/3 p-3">
                     <p className="text-sm text-coolGray-800 font-semibold">
-                      Your   Requirements
+                      Your Shop Requirements
                     </p>
                   </div>
                   <div className="w-full md:flex-1 p-3">
@@ -318,7 +309,7 @@ const UserProfile = () => {
                 <div className="flex flex-wrap -m-3">
                   <div className="w-full md:w-1/3 p-3">
                     <p className="text-sm text-coolGray-800 font-semibold">
-                      Your   Location
+                      Job Location
                     </p>
                   </div>
                   <div className="w-full md:flex-1 p-3">
@@ -326,7 +317,7 @@ const UserProfile = () => {
                       {...register("location")}
                       className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-indigo-600 border border-coolGray-200 rounded-lg shadow-input"
                       type="text"
-                      placeholder="Your Company  location"
+                      placeholder="Job location"
                     />
                   </div>
                 </div>
@@ -378,20 +369,18 @@ const UserProfile = () => {
                     </p>
                   </div>
                   <div className="w-full md:flex-1 p-3">
-                    <select
+
+                    <input
                       {...register("tags")}
                       className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-indigo-600 border border-coolGray-200 rounded-lg shadow-input"
-                    >
-                      <option value="">Select a role</option>
-                      <option value="salon">Salon</option>
-                      <option value="spa">Spa</option>
-                      <option value="massage">Massage</option>
-                    </select>
+                      type="text"
+                      placeholder="Your Job Role"
+                    />
                   </div>
+
                 </div>
               </div>
             </div>
-
             {/* UAE NUMBER */}
             <div className="py-6 border-b border-coolGray-100">
               <div className="w-full md:w-9/12">
@@ -399,7 +388,7 @@ const UserProfile = () => {
                   <div className="w-full md:w-1/3 p-3">
                     <p className="text-sm text-coolGray-800 font-semibold">
                       {" "}
-                      Your UAE Number{" "}
+                      Shop UAE Number{" "}
                     </p>
                   </div>
                   <div className="w-full md:flex-1 p-3">
@@ -407,7 +396,7 @@ const UserProfile = () => {
                       {...register("UAENumber")}
                       className="w-full px-4 py-2.5 text-base text-coolGray-900 font-normal outline-none focus:border-indigo-600 border border-coolGray-200 rounded-lg shadow-input"
                       type="text"
-                      placeholder=" Your UAE Number"
+                      placeholder=" Shop Number"
                     />
                   </div>
                 </div>
@@ -416,7 +405,7 @@ const UserProfile = () => {
           </div>
         </div>
       </section>
-    </form>
+    </form >
   );
 };
 

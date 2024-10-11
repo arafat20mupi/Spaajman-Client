@@ -3,22 +3,23 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from "react-router-dom";
 import useAxiosPublic from "../Hooks/useAxiosPublic";
 import toast from "react-hot-toast";
-
+import { useContext } from 'react';
+import { AuthContext } from '../Provider/AuthProvider';
 
 const JobApplicationForm = () => {
   const { _id, title, email } = useLoaderData();
   const { register, handleSubmit, reset } = useForm();
   const navigate = useNavigate();
   const axiosCommon = useAxiosPublic();
+  const {user} = useContext(AuthContext)
 
-  const onSubmit =async (data) => {
+  const onSubmit = async (data) => {
     try {
       const applyData = {
         posterEmail: email,
         posterId: _id,
         ...data
       }
-
       // Posting data to the server
       await axiosCommon.post('/appliedJob', applyData);
       toast.success('appliedJob successfully!');
@@ -28,7 +29,7 @@ const JobApplicationForm = () => {
       toast.error(error.message);
     }
   };
-
+console.log(user);
   return (
     <div className="p-16 pt-28">
       <h1 className="text-2xl font-bold mb-4">Apply for Job: {title}</h1>
@@ -36,14 +37,22 @@ const JobApplicationForm = () => {
         <input
           type="text"
           placeholder="Your Name"
+          value={user.displayName}
           className="block w-full mb-4 p-2 border"
           {...register('name', { required: true })}
         />
         <input
           type="email"
           placeholder="Your Email"
+          value={user.email}
           className="block w-full mb-4 p-2 border"
           {...register('email', { required: true })}
+        />
+        <input
+          type="number"
+          placeholder="Your Phone Number"
+          className="block w-full mb-4 p-2 border"
+          {...register('number', { required: true })}
         />
         <textarea
           placeholder="Why are you a good fit?"

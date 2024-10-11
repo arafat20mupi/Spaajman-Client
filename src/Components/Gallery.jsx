@@ -16,7 +16,7 @@ const Gallery = () => {
           {jobs.map((image, index) => (
             <div key={index} className='relative group'>
               <img
-                src={image.images || 'https://i.ibb.co/SXfF8yH/7.jpg'}
+                src={image.image|| 'https://i.ibb.co/SXfF8yH/7.jpg' }
                 alt={`Relaxation moment ${index + 1}`}
                 className='w-[400px] h-[400px] my-3 rounded-md transition-opacity duration-300 ease-in-out group-hover:opacity-80'
               />
