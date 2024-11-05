@@ -96,6 +96,18 @@ const Navbar = () => {
               Blogs
             </li>
           </Link>
+          <Link to='/service'>
+            <li className="flex items-center text-gray-800 font-medium hover:text-indigo-600 cursor-pointer transition duration-300">
+              <FaBlogger className="mr-2" />
+              Service
+            </li>
+          </Link>
+          <Link to='/package'>
+            <li className="flex items-center text-gray-800 font-medium hover:text-indigo-600 cursor-pointer transition duration-300">
+              <FaBlogger className="mr-2" />
+              Package
+            </li>
+          </Link>
         </ul>
 
         <div className="flex flex-col md:flex-row gap-4 items-center p-4 md:p-0">

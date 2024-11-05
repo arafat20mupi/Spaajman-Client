@@ -25,6 +25,8 @@ import AllShopAdmin from '../Dashboard/AllShopAdmin';
 import PostedJob from '../Dashboard/PostedJob';
 import AppliedJob from '../Dashboard/AppliedJob';
 import UpdateUser from '../UpadateUser';
+import Package from '../Package/Package';
+import Service from '../Service/Service';
 
 export const router = createBrowserRouter([
   {
@@ -78,9 +80,14 @@ export const router = createBrowserRouter([
         path: "/gallery",
         element: <Gallery />
       },
-
-
-
+      {
+        path: '/package',
+        element: <Package />
+      },
+      {
+        path: '/service',
+        element: <Service />
+      }
     ],
   }, {
     path: "/dashboard",
